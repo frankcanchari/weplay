@@ -1,0 +1,1615 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: db_tecnoserv
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.1.38-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `asientos`
+--
+
+DROP TABLE IF EXISTS `asientos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asientos` (
+  `idAsiento` int(11) NOT NULL,
+  `fila` int(11) DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `idCategAsiento` int(11) DEFAULT NULL,
+  `idStockAsiento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idAsiento`),
+  KEY `FK_Asientos_CategoriaAsiento` (`idCategAsiento`),
+  KEY `FK_Asientos_EstadoAsiento` (`estado`),
+  KEY `FK_Asientos_StockAsientos` (`idStockAsiento`),
+  CONSTRAINT `FK_Asientos_CategoriaAsiento` FOREIGN KEY (`idCategAsiento`) REFERENCES `categoriaasiento` (`idCategoriaAsiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Asientos_EstadoAsiento` FOREIGN KEY (`estado`) REFERENCES `estadoasiento` (`idEstadoA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Asientos_StockAsientos` FOREIGN KEY (`idStockAsiento`) REFERENCES `stockasientos` (`idStockAsiento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asientos`
+--
+
+LOCK TABLES `asientos` WRITE;
+/*!40000 ALTER TABLE `asientos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asientos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auspiciadores`
+--
+
+DROP TABLE IF EXISTS `auspiciadores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auspiciadores` (
+  `idAuspiciadores` int(11) NOT NULL,
+  `descripcionAus` varchar(50) DEFAULT NULL,
+  `imagenE` longblob,
+  `idTipoAuspiciador` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idAuspiciadores`),
+  KEY `FK_Auspiciadores_TipoAuspiciadores` (`idTipoAuspiciador`),
+  CONSTRAINT `FK_Auspiciadores_TipoAuspiciadores` FOREIGN KEY (`idTipoAuspiciador`) REFERENCES `tipoauspiciadores` (`idTipoAuspiciador`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auspiciadores`
+--
+
+LOCK TABLES `auspiciadores` WRITE;
+/*!40000 ALTER TABLE `auspiciadores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auspiciadores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `categoriaasiento`
+--
+
+DROP TABLE IF EXISTS `categoriaasiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoriaasiento` (
+  `idCategoriaAsiento` int(11) NOT NULL,
+  `NombreCategoriaA` varchar(50) DEFAULT NULL,
+  `DescripCategoriaA` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idCategoriaAsiento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categoriaasiento`
+--
+
+LOCK TABLES `categoriaasiento` WRITE;
+/*!40000 ALTER TABLE `categoriaasiento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categoriaasiento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ceremonias`
+--
+
+DROP TABLE IF EXISTS `ceremonias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ceremonias` (
+  `idCeremonias` int(11) NOT NULL,
+  `DescripcionC` varchar(100) DEFAULT NULL,
+  `imagenC` longblob,
+  `idTipoCeremonias` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idCeremonias`),
+  KEY `FK_Ceremonias_TipoCeremonias` (`idTipoCeremonias`),
+  CONSTRAINT `FK_Ceremonias_TipoCeremonias` FOREIGN KEY (`idTipoCeremonias`) REFERENCES `tipoceremonias` (`idTipoCeremonias`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ceremonias`
+--
+
+LOCK TABLES `ceremonias` WRITE;
+/*!40000 ALTER TABLE `ceremonias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ceremonias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comiteorganizador`
+--
+
+DROP TABLE IF EXISTS `comiteorganizador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comiteorganizador` (
+  `idComite` int(11) NOT NULL,
+  `idRepresentateORG` int(11) DEFAULT NULL,
+  `NombresR` varchar(50) DEFAULT NULL,
+  `ApellidoR` varchar(50) DEFAULT NULL,
+  `imagenR` longblob,
+  `DescripcionCO` varchar(100) DEFAULT NULL,
+  `idTipoRepresentante` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idComite`),
+  KEY `FK_ComiteOrganizador_Representantes` (`idRepresentateORG`),
+  KEY `FK_ComiteOrganizador_TipoRepresentante` (`idTipoRepresentante`),
+  CONSTRAINT `FK_ComiteOrganizador_Representantes` FOREIGN KEY (`idRepresentateORG`) REFERENCES `representantes` (`IdRepresentateORG`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_ComiteOrganizador_TipoRepresentante` FOREIGN KEY (`idTipoRepresentante`) REFERENCES `tiporepresentante` (`idTipoRepresentante`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comiteorganizador`
+--
+
+LOCK TABLES `comiteorganizador` WRITE;
+/*!40000 ALTER TABLE `comiteorganizador` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comiteorganizador` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compra_entrada`
+--
+
+DROP TABLE IF EXISTS `compra_entrada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `compra_entrada` (
+  `idCompraEntrada` int(11) NOT NULL,
+  `idUsuario` int(11) DEFAULT NULL,
+  `idSede` int(11) DEFAULT NULL,
+  `idHorarioEvento` int(11) DEFAULT NULL,
+  `idMoneda` int(11) DEFAULT NULL,
+  `idReporteEntrada` int(11) DEFAULT NULL,
+  `idAsiento` int(11) DEFAULT NULL,
+  `NumTarjeta` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`idCompraEntrada`),
+  KEY `FK_Compra_Entrada_Asientos` (`idAsiento`),
+  KEY `FK_Compra_Entrada_HorarioEventos` (`idHorarioEvento`),
+  KEY `FK_Compra_Entrada_Moneda` (`idMoneda`),
+  KEY `FK_Compra_Entrada_ReporteEntrada` (`idReporteEntrada`),
+  KEY `FK_Compra_Entrada_Sedes` (`idSede`),
+  KEY `FK_Compra_Entrada_Usuarios` (`idUsuario`),
+  CONSTRAINT `FK_Compra_Entrada_Asientos` FOREIGN KEY (`idAsiento`) REFERENCES `asientos` (`idAsiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Compra_Entrada_HorarioEventos` FOREIGN KEY (`idHorarioEvento`) REFERENCES `horarioeventos` (`idHorarioEventos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Compra_Entrada_Moneda` FOREIGN KEY (`idMoneda`) REFERENCES `moneda` (`idMoneda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Compra_Entrada_ReporteEntrada` FOREIGN KEY (`idReporteEntrada`) REFERENCES `reporteentrada` (`idReporteEntrada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Compra_Entrada_Sedes` FOREIGN KEY (`idSede`) REFERENCES `sedes` (`idSede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Compra_Entrada_Usuarios` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `compra_entrada`
+--
+
+LOCK TABLES `compra_entrada` WRITE;
+/*!40000 ALTER TABLE `compra_entrada` DISABLE KEYS */;
+/*!40000 ALTER TABLE `compra_entrada` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comprobantepago`
+--
+
+DROP TABLE IF EXISTS `comprobantepago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comprobantepago` (
+  `idPagosEntrada` int(11) NOT NULL,
+  `idCompraEntrada` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idPagosEntrada`),
+  KEY `FK_ComprobantePago_Compra_Entrada` (`idCompraEntrada`),
+  CONSTRAINT `FK_ComprobantePago_Compra_Entrada` FOREIGN KEY (`idCompraEntrada`) REFERENCES `compra_entrada` (`idCompraEntrada`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comprobantepago`
+--
+
+LOCK TABLES `comprobantepago` WRITE;
+/*!40000 ALTER TABLE `comprobantepago` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comprobantepago` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `config_sede_deporte`
+--
+
+DROP TABLE IF EXISTS `config_sede_deporte`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `config_sede_deporte` (
+  `idConfigSedeDeporte` int(11) NOT NULL AUTO_INCREMENT,
+  `idSedeFK` int(11) NOT NULL,
+  `idDeporteFK` int(11) NOT NULL,
+  PRIMARY KEY (`idConfigSedeDeporte`),
+  KEY `idSedeFK` (`idSedeFK`),
+  KEY `idDeporteFK` (`idDeporteFK`),
+  CONSTRAINT `config_sede_deporte_ibfk_1` FOREIGN KEY (`idSedeFK`) REFERENCES `sedes` (`idSede`),
+  CONSTRAINT `config_sede_deporte_ibfk_2` FOREIGN KEY (`idDeporteFK`) REFERENCES `deportes` (`idDeporte`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `config_sede_deporte`
+--
+
+LOCK TABLES `config_sede_deporte` WRITE;
+/*!40000 ALTER TABLE `config_sede_deporte` DISABLE KEYS */;
+INSERT INTO `config_sede_deporte` VALUES (1,1,2),(2,4,6);
+/*!40000 ALTER TABLE `config_sede_deporte` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `conocenos`
+--
+
+DROP TABLE IF EXISTS `conocenos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conocenos` (
+  `idconocenos` int(11) NOT NULL AUTO_INCREMENT,
+  `co_desc` text NOT NULL,
+  `co_imagen` varchar(50) NOT NULL,
+  `co_fecha` date NOT NULL,
+  `bEstPri` bit(1) NOT NULL,
+  PRIMARY KEY (`idconocenos`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conocenos`
+--
+
+LOCK TABLES `conocenos` WRITE;
+/*!40000 ALTER TABLE `conocenos` DISABLE KEYS */;
+INSERT INTO `conocenos` VALUES (1,'CONOCEMOS: Estamos preparando el camino a los XVIII Juegos Panamericanos y Sextos Juegos Parapanamericanos.','vista/mgc/img/conocenos.jpg','2019-05-17','');
+/*!40000 ALTER TABLE `conocenos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deportedestacado`
+--
+
+DROP TABLE IF EXISTS `deportedestacado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `deportedestacado` (
+  `idDeporteDestac` int(11) NOT NULL,
+  `idRanking` int(11) DEFAULT NULL,
+  `idPais` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDeporteDestac`),
+  KEY `FK_DeporteDestacado_Pais` (`idPais`),
+  KEY `FK_DeporteDestacado_Ranking` (`idRanking`),
+  CONSTRAINT `FK_DeporteDestacado_Ranking` FOREIGN KEY (`idRanking`) REFERENCES `ranking` (`idRanking`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `F_DepDestacado_pais` FOREIGN KEY (`idPais`) REFERENCES `pais` (`idPais`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deportedestacado`
+--
+
+LOCK TABLES `deportedestacado` WRITE;
+/*!40000 ALTER TABLE `deportedestacado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deportedestacado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deportes`
+--
+
+DROP TABLE IF EXISTS `deportes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `deportes` (
+  `idDeporte` int(11) NOT NULL,
+  `NombDeporte` varchar(50) DEFAULT NULL,
+  `idDetalleDeporte` int(11) DEFAULT NULL,
+  `idReglamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDeporte`),
+  KEY `FK_Deportes_DetalleDeporte` (`idDetalleDeporte`),
+  KEY `FK_Deportes_Reglamento` (`idReglamento`),
+  CONSTRAINT `FK_Deportes_DetalleDeporte` FOREIGN KEY (`idDetalleDeporte`) REFERENCES `detalledeporte` (`idDetalleDeporte`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Deportes_Reglamento` FOREIGN KEY (`idReglamento`) REFERENCES `reglamento` (`idReglamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deportes`
+--
+
+LOCK TABLES `deportes` WRITE;
+/*!40000 ALTER TABLE `deportes` DISABLE KEYS */;
+INSERT INTO `deportes` VALUES (1,'Futbol',NULL,NULL),(2,'Atletismo',NULL,NULL),(3,'BÃ¡dminton',NULL,NULL),(4,'Baloncesto',NULL,NULL),(5,'Boxeo',NULL,NULL),(6,'Ciclismo de Pista',NULL,NULL),(7,'Ciclismo de Ruta',NULL,NULL),(8,'Gimnasia Ritmica',NULL,NULL),(9,'Golf',NULL,NULL),(10,'Judo',NULL,NULL);
+/*!40000 ALTER TABLE `deportes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deportistas`
+--
+
+DROP TABLE IF EXISTS `deportistas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `deportistas` (
+  `idDeportistas` int(11) NOT NULL AUTO_INCREMENT,
+  `idDeporte` int(11) DEFAULT NULL,
+  `descripcion` varchar(50) DEFAULT NULL,
+  `Nombre_Deportista` varchar(100) DEFAULT NULL,
+  `idPais` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDeportistas`),
+  KEY `FK_Deportistas_Deportes` (`idDeporte`),
+  KEY `FK_Deportistas_Pais` (`idPais`),
+  KEY `FK_Deportistas_Usuarios` (`Nombre_Deportista`),
+  CONSTRAINT `Dep_pais` FOREIGN KEY (`idPais`) REFERENCES `pais` (`idPais`),
+  CONSTRAINT `FK_Deportistas_Deportes` FOREIGN KEY (`idDeporte`) REFERENCES `deportes` (`idDeporte`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deportistas`
+--
+
+LOCK TABLES `deportistas` WRITE;
+/*!40000 ALTER TABLE `deportistas` DISABLE KEYS */;
+INSERT INTO `deportistas` VALUES (1,3,'badminton deporte de a dos','harold Ferrer',1),(2,3,'deporte de a dos','jonathan Franco',9),(3,2,'deporte base','frank',4),(4,2,'deporte base','Ines Melchor',18),(5,2,'deporte base','Gladys Tejeda',18),(6,2,'deporte base','Kimberly Garcia',18),(7,2,'deporte base','Raul Pacheco',18),(8,3,'raqueta y una plumilla','Fernanda Saponara',18),(9,3,'raqueta y una plumilla','Mario Cuba Rodriguez',18),(10,3,'raqueta y una plumilla','Katherine Winder Cochella',18),(11,3,'raqueta y una plumilla','Paula La torre Regal',18),(12,3,'raqueta y una plumilla','Diego MiniCuadros',18),(13,3,'raqueta y una plumilla','Ines Castillo Salazar',18),(14,3,'raqueta y una plumilla','Daniela Macias Brandes',18),(15,3,'raqueta y una plumilla','Danica Nishimura Higa',18),(16,3,'raqueta y una plumilla','Daniel La torre Regal',18);
+/*!40000 ALTER TABLE `deportistas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `detalledeporte`
+--
+
+DROP TABLE IF EXISTS `detalledeporte`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `detalledeporte` (
+  `idDetalleDeporte` int(11) NOT NULL,
+  `descripcionDeporte` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idDetalleDeporte`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detalledeporte`
+--
+
+LOCK TABLES `detalledeporte` WRITE;
+/*!40000 ALTER TABLE `detalledeporte` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalledeporte` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `detalleeventos`
+--
+
+DROP TABLE IF EXISTS `detalleeventos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `detalleeventos` (
+  `idDetalleEvento` int(11) NOT NULL AUTO_INCREMENT,
+  `idEvento` int(11) DEFAULT NULL,
+  `idDeportista` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDetalleEvento`),
+  KEY `FK_DetalleEventos_Deportistas` (`idDeportista`),
+  KEY `FK_DetalleEventos_Eventos` (`idEvento`),
+  CONSTRAINT `FK_detalle_deportista` FOREIGN KEY (`idDeportista`) REFERENCES `deportistas` (`idDeportistas`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detalleeventos`
+--
+
+LOCK TABLES `detalleeventos` WRITE;
+/*!40000 ALTER TABLE `detalleeventos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalleeventos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `equipo`
+--
+
+DROP TABLE IF EXISTS `equipo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `equipo` (
+  `idEquipo` int(11) NOT NULL AUTO_INCREMENT,
+  `idPaisFK` int(11) NOT NULL,
+  `totalIntegrantes` int(11) NOT NULL,
+  PRIMARY KEY (`idEquipo`),
+  KEY `FK_equipo_pais` (`idPaisFK`),
+  CONSTRAINT `FK_equipo_pais` FOREIGN KEY (`idPaisFK`) REFERENCES `pais` (`idPais`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `equipo`
+--
+
+LOCK TABLES `equipo` WRITE;
+/*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estadoasiento`
+--
+
+DROP TABLE IF EXISTS `estadoasiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estadoasiento` (
+  `idEstadoA` int(11) NOT NULL,
+  `descripcion` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`idEstadoA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estadoasiento`
+--
+
+LOCK TABLES `estadoasiento` WRITE;
+/*!40000 ALTER TABLE `estadoasiento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `estadoasiento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estadousuario`
+--
+
+DROP TABLE IF EXISTS `estadousuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `estadousuario` (
+  `idEstadoUsuario` int(11) NOT NULL,
+  `DescripcionEstado` varchar(50) NOT NULL,
+  PRIMARY KEY (`idEstadoUsuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estadousuario`
+--
+
+LOCK TABLES `estadousuario` WRITE;
+/*!40000 ALTER TABLE `estadousuario` DISABLE KEYS */;
+INSERT INTO `estadousuario` VALUES (1,'Activado'),(2,'Desactivado');
+/*!40000 ALTER TABLE `estadousuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `eventos`
+--
+
+DROP TABLE IF EXISTS `eventos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `eventos` (
+  `idEvento` int(11) NOT NULL AUTO_INCREMENT,
+  `idSede` int(11) DEFAULT NULL,
+  `idHorarioEventos` int(11) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  `idDeportesFK` int(11) NOT NULL,
+  `idConfig_Sede_DeporteFK` int(11) NOT NULL,
+  PRIMARY KEY (`idEvento`),
+  KEY `FK_Eventos_HorarioEventos` (`idHorarioEventos`),
+  KEY `FK_Eventos_Sedes` (`idSede`),
+  KEY `idDeportesFK` (`idDeportesFK`),
+  KEY `FK_eventos_Config_sede_deporte` (`idConfig_Sede_DeporteFK`),
+  CONSTRAINT `FK_Eventos_HorarioEventos` FOREIGN KEY (`idHorarioEventos`) REFERENCES `horarioeventos` (`idHorarioEventos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Eventos_Sedes` FOREIGN KEY (`idSede`) REFERENCES `sedes` (`idSede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_eventos_Config_sede_deporte` FOREIGN KEY (`idConfig_Sede_DeporteFK`) REFERENCES `config_sede_deporte` (`idConfigSedeDeporte`),
+  CONSTRAINT `eventos_ibfk_1` FOREIGN KEY (`idDeportesFK`) REFERENCES `deportes` (`idDeporte`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eventos`
+--
+
+LOCK TABLES `eventos` WRITE;
+/*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
+INSERT INTO `eventos` VALUES (1,1,1,'av. probando',3,1),(3,4,1,'av. seg prueba',6,2);
+/*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fechaevento`
+--
+
+DROP TABLE IF EXISTS `fechaevento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fechaevento` (
+  `idFechaEvento` int(11) NOT NULL,
+  `idHora` int(11) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  PRIMARY KEY (`idFechaEvento`),
+  KEY `FK_FechaEvento_Hora` (`idHora`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fechaevento`
+--
+
+LOCK TABLES `fechaevento` WRITE;
+/*!40000 ALTER TABLE `fechaevento` DISABLE KEYS */;
+INSERT INTO `fechaevento` VALUES (1,1,'2019-05-30');
+/*!40000 ALTER TABLE `fechaevento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `galeria`
+--
+
+DROP TABLE IF EXISTS `galeria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `galeria` (
+  `idGaleria` int(11) NOT NULL,
+  `Fotos` longblob,
+  `Medios` varchar(50) DEFAULT NULL,
+  `Documentos` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idGaleria`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `galeria`
+--
+
+LOCK TABLES `galeria` WRITE;
+/*!40000 ALTER TABLE `galeria` DISABLE KEYS */;
+/*!40000 ALTER TABLE `galeria` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hora`
+--
+
+DROP TABLE IF EXISTS `hora`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hora` (
+  `idHora` int(11) NOT NULL,
+  `horainicio` varchar(10) DEFAULT NULL,
+  `horafin` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`idHora`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hora`
+--
+
+LOCK TABLES `hora` WRITE;
+/*!40000 ALTER TABLE `hora` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hora` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `horarioeventos`
+--
+
+DROP TABLE IF EXISTS `horarioeventos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horarioeventos` (
+  `idHorarioEventos` int(11) NOT NULL,
+  `idDeporte` int(11) DEFAULT NULL,
+  `idFechaEvento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idHorarioEventos`),
+  KEY `FK_HorarioEventos_FechaEvento` (`idFechaEvento`),
+  KEY `idDeporte` (`idDeporte`),
+  CONSTRAINT `FK_HorarioEventos_FechaEvento` FOREIGN KEY (`idFechaEvento`) REFERENCES `fechaevento` (`idFechaEvento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `horarioeventos_ibfk_1` FOREIGN KEY (`idDeporte`) REFERENCES `deportes` (`idDeporte`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horarioeventos`
+--
+
+LOCK TABLES `horarioeventos` WRITE;
+/*!40000 ALTER TABLE `horarioeventos` DISABLE KEYS */;
+INSERT INTO `horarioeventos` VALUES (1,1,1);
+/*!40000 ALTER TABLE `horarioeventos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `institucional`
+--
+
+DROP TABLE IF EXISTS `institucional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `institucional` (
+  `idInstitucional` int(11) NOT NULL,
+  `descripInstitucional` varchar(100) DEFAULT NULL,
+  `imagenInstitucional` longblob,
+  `idTipoInstitucional` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idInstitucional`),
+  KEY `FK_Institucional_TipoInstitucional` (`idTipoInstitucional`),
+  CONSTRAINT `FK_Institucional_TipoInstitucional` FOREIGN KEY (`idTipoInstitucional`) REFERENCES `tipoinstitucional` (`idTipoInstitucional`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `institucional`
+--
+
+LOCK TABLES `institucional` WRITE;
+/*!40000 ALTER TABLE `institucional` DISABLE KEYS */;
+/*!40000 ALTER TABLE `institucional` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `integrantes`
+--
+
+DROP TABLE IF EXISTS `integrantes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `integrantes` (
+  `idIntegrante` int(11) NOT NULL AUTO_INCREMENT,
+  `idEquipoFK` int(11) NOT NULL,
+  `idDeportistasFK` int(11) NOT NULL,
+  PRIMARY KEY (`idIntegrante`),
+  KEY `FK_integrantes_equipo` (`idEquipoFK`),
+  KEY `FK_integrnates_deportistas` (`idDeportistasFK`),
+  CONSTRAINT `FK_integrantes_equipo` FOREIGN KEY (`idEquipoFK`) REFERENCES `equipo` (`idEquipo`),
+  CONSTRAINT `FK_integrnates_deportistas` FOREIGN KEY (`idDeportistasFK`) REFERENCES `deportistas` (`idDeportistas`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `integrantes`
+--
+
+LOCK TABLES `integrantes` WRITE;
+/*!40000 ALTER TABLE `integrantes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `integrantes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medallas`
+--
+
+DROP TABLE IF EXISTS `medallas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medallas` (
+  `idMedalla` int(11) NOT NULL,
+  `idTipoMedalla` int(11) DEFAULT NULL,
+  `IdNumMedalla` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idMedalla`),
+  KEY `FK_Medallas_TipoMedalla` (`idTipoMedalla`),
+  CONSTRAINT `FK_Medallas_TipoMedalla` FOREIGN KEY (`idTipoMedalla`) REFERENCES `tipomedalla` (`idTipoMedalla`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medallas`
+--
+
+LOCK TABLES `medallas` WRITE;
+/*!40000 ALTER TABLE `medallas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `medallas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medallerohistorico`
+--
+
+DROP TABLE IF EXISTS `medallerohistorico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medallerohistorico` (
+  `idmedHis_PK` int(11) NOT NULL AUTO_INCREMENT,
+  `medHisPue` int(11) NOT NULL,
+  `pai_FK` int(11) NOT NULL,
+  `medHisOro` int(11) NOT NULL,
+  `medHisPla` int(11) NOT NULL,
+  `medHisBro` int(11) NOT NULL,
+  `medHisTot` int(11) NOT NULL,
+  PRIMARY KEY (`idmedHis_PK`),
+  KEY `FK_medHist_Pais` (`pai_FK`),
+  CONSTRAINT `FK_medHist_Pais` FOREIGN KEY (`pai_FK`) REFERENCES `pais` (`idPais`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medallerohistorico`
+--
+
+LOCK TABLES `medallerohistorico` WRITE;
+/*!40000 ALTER TABLE `medallerohistorico` DISABLE KEYS */;
+INSERT INTO `medallerohistorico` VALUES (1,1,1,1948,1455,1027,1000),(2,2,2,875,593,558,2026),(3,3,3,456,656,801,1913),(4,4,4,328,359,520,1207),(5,5,5,294,331,435,1060),(6,6,6,220,289,502,1019),(7,7,7,108,148,277,574),(8,8,8,92,205,277,574),(9,9,9,44,91,151,286),(10,10,10,29,63,112,204),(11,11,11,28,81,134,243),(12,12,12,28,30,61,119),(13,13,13,25,46,60,131),(14,14,14,20,15,40,75),(15,15,15,12,25,46,83),(16,16,16,11,23,29,63),(17,17,17,9,15,13,37),(18,18,18,8,33,69,110),(19,19,19,5,9,17,31),(20,20,20,5,6,11,22),(21,21,21,3,19,26,48),(22,22,22,3,2,5,10),(23,23,23,2,4,12,18),(24,24,24,1,8,13,22),(25,25,25,1,4,4,9),(26,26,26,1,4,1,6),(27,27,27,1,0,2,3),(28,28,28,1,0,2,3),(29,29,29,0,4,7,11),(30,30,30,0,4,6,10),(31,31,31,0,4,11,15),(32,32,32,0,2,5,7),(33,33,33,0,2,1,3),(34,34,34,0,2,1,3),(35,35,35,0,2,8,10),(36,36,36,0,2,6,8),(37,37,37,0,2,4,6),(38,38,38,0,2,2,4),(39,39,39,0,0,2,2),(40,40,40,0,0,2,2),(41,41,41,0,0,0,0),(42,42,42,0,0,0,0);
+/*!40000 ALTER TABLE `medallerohistorico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menuprincipal`
+--
+
+DROP TABLE IF EXISTS `menuprincipal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menuprincipal` (
+  `idMenuPrincipal` int(11) NOT NULL,
+  `idCeremonias` int(11) DEFAULT NULL,
+  `idPreguntasFrecuentes` int(11) DEFAULT NULL,
+  `idAuspiciadores` int(11) DEFAULT NULL,
+  `idInstitucional` int(11) DEFAULT NULL,
+  `idComite` int(11) DEFAULT NULL,
+  `idGaleria` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idMenuPrincipal`),
+  KEY `FK_MenuPrincipal_Auspiciadores` (`idAuspiciadores`),
+  KEY `FK_MenuPrincipal_Ceremonias` (`idCeremonias`),
+  KEY `FK_MenuPrincipal_ComiteOrganizador` (`idComite`),
+  KEY `FK_MenuPrincipal_Galeria` (`idGaleria`),
+  KEY `FK_MenuPrincipal_Institucional` (`idInstitucional`),
+  KEY `FK_MenuPrincipal_PreguntasFrecuentes` (`idPreguntasFrecuentes`),
+  CONSTRAINT `FK_MenuPrincipal_Auspiciadores` FOREIGN KEY (`idAuspiciadores`) REFERENCES `auspiciadores` (`idAuspiciadores`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MenuPrincipal_Ceremonias` FOREIGN KEY (`idCeremonias`) REFERENCES `ceremonias` (`idCeremonias`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MenuPrincipal_ComiteOrganizador` FOREIGN KEY (`idComite`) REFERENCES `comiteorganizador` (`idComite`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MenuPrincipal_Galeria` FOREIGN KEY (`idGaleria`) REFERENCES `galeria` (`idGaleria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MenuPrincipal_Institucional` FOREIGN KEY (`idInstitucional`) REFERENCES `institucional` (`idInstitucional`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menuprincipal`
+--
+
+LOCK TABLES `menuprincipal` WRITE;
+/*!40000 ALTER TABLE `menuprincipal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menuprincipal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mision`
+--
+
+DROP TABLE IF EXISTS `mision`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mision` (
+  `idmision` int(11) NOT NULL AUTO_INCREMENT,
+  `mi_desc` text NOT NULL,
+  `mi_imagen` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `mi_fecha` date NOT NULL,
+  `bEstPri` bit(1) NOT NULL,
+  PRIMARY KEY (`idmision`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mision`
+--
+
+LOCK TABLES `mision` WRITE;
+/*!40000 ALTER TABLE `mision` DISABLE KEYS */;
+INSERT INTO `mision` VALUES (1,'patatas','ruta3.jpg','2019-04-16','\0'),(2,'patatas','ruta3.jpg','2019-04-16','\0'),(3,'patatas','ruta3.jpg','2019-04-16','\0'),(4,'MISION: Ejecutar con eficacia las acciones necesarias para el desarrollo de los XVIII Juegos Panamericanos y Juegos Parapanamericanos del 2019, de manera planificada y coordinada con los actores involucrados.','vista/mgc/img/mision.jpg','2019-05-16','');
+/*!40000 ALTER TABLE `mision` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `moneda`
+--
+
+DROP TABLE IF EXISTS `moneda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `moneda` (
+  `idMoneda` int(11) NOT NULL,
+  `idTipoMoneda` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idMoneda`),
+  KEY `FK_Moneda_TipoMoneda` (`idTipoMoneda`),
+  CONSTRAINT `FK_Moneda_TipoMoneda` FOREIGN KEY (`idTipoMoneda`) REFERENCES `tipomoneda` (`idTipoMoneda`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `moneda`
+--
+
+LOCK TABLES `moneda` WRITE;
+/*!40000 ALTER TABLE `moneda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `moneda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `norma`
+--
+
+DROP TABLE IF EXISTS `norma`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `norma` (
+  `idNormaPK` int(11) NOT NULL AUTO_INCREMENT,
+  `numNor` int(11) NOT NULL,
+  `contNor` text NOT NULL,
+  `SecRegFK` int(11) NOT NULL,
+  PRIMARY KEY (`idNormaPK`),
+  KEY `FK_Norma_SeccReg` (`SecRegFK`),
+  CONSTRAINT `FK_Norma_SeccReg` FOREIGN KEY (`SecRegFK`) REFERENCES `seccionreglamento` (`idSecRegPK`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `norma`
+--
+
+LOCK TABLES `norma` WRITE;
+/*!40000 ALTER TABLE `norma` DISABLE KEYS */;
+INSERT INTO `norma` VALUES (1,1,'1.  Establecer las reglas a travÃ©s de las cuales se cumpla, estrictamente, todo lo relativo a la organizaciÃ³n de los Juegos Panamericanos.',1),(2,2,'2.  Definir los aspectos organizativos, tÃ©cnicos y de logÃ­stica general que debe cumplirse, tanto en la etapa preparatoria como durante el desarrollo de los Juegos Panamericanos.',1),(3,3,'3.  Controlar y asegurar que el ComitÃ© Organizador cumpla sus obligaciones y garantice las condiciones adecuadas, desde el punto de vista material, organizativo y tÃ©cnico, para que los Juegos Panamericanos se desarrollen exitosamente,	en	beneficio	de	los	atletas	y	de	los	Miembros	de	la	Odepa.\r\n',1),(4,4,'4.  Establecer un marco adecuado para la coordinaciÃ³n entre todos los factores que	participan	en	la	organizaciÃ³n	de	los	Juegos,	definiendo	y	armonizando	las	responsabilidades	de	cada	una	de	las	partes,	en	interÃ©s	y	en	beneficio	de	los	propios Juegos, de los atletas y demÃ¡s participantes.\r\n',1),(5,5,'5.  Respetar los principios generales establecidos por el ComitÃ© OlÃ­mpico Internacional para la organizaciÃ³n de los Juegos OlÃ­mpicos y adoptar su aplicaciÃ³n, cuando resulte conveniente, en el Ã¡mbito de los Juegos Panamericanos, particularmente	lo	que	se	refiere	al	concepto	organizativo,	las	reglas	tÃ©cnicas	para cada deporte, la lucha contra el dopaje, el juego limpio, el espÃ­ritu humanista y solidario, el respeto al medio ambiente y la promociÃ³n de la imagen olÃ­mpica que debe caracterizar a los Juegos Panamericanos, reconociendo, en todo momento, que la OrganizaciÃ³n Deportiva Panamericana es la mÃ¡xima autoridad sobre cualquier cuestiÃ³n relativa a los Juegos Panamericanos.',1),(6,6,'6.  Asegurar que el Reglamento sea respetado por los Miembros de la Odepa, sus atletas	y	oficiales	representantes	y	por	el	ComitÃ©	Organizador;	asÃ­	como,	por	las Federaciones Internacionales y/o Confederaciones Deportivas Panamericanas u organizaciones deportivas con similares funciones y cualquier otro participante debidamente acreditado en los Juegos Panamericanos. ',1),(7,1,'1.  La ComisiÃ³n TÃ©cnica de la Odepa prepararÃ¡ un Proyecto de Programa Deportivo de los Juegos para su aprobaciÃ³n por el ComitÃ© Ejecutivo de la Odepa, a	fin	de	que	sea	entregado	a	las	ciudades	candidatas	a	organizar	los	Juegos	Panamericanos,	una	vez	que	comience	el	proceso	de	candidatura,	con el fin de que dichas ciudades puedan evaluar las posibilidades de llevarlo a cabo en su totalidad.',2),(8,2,'2.  Una vez que la Odepa haya elegido la ciudad que organizarÃ¡ los Juegos, la ComisiÃ³n TÃ©cnica de la Odepa tendrÃ¡ la responsabilidad de presentar una propuesta al ComitÃ© Ejecutivo de la Odepa sobre los deportes, disciplinas y eventos que se recomienda incluir en el Programa de los Juegos Panamericanos. Dicha propuesta serÃ¡ elaborada en coordinaciÃ³n con el ComitÃ© Organizador, el Miembro de la Odepa sede de los Juegos y las Confederaciones Deportivas Panamericanas y/o Federaciones Internacionales. La ComisiÃ³n TÃ©cnica someterÃ¡ el Proyecto del Programa de los Juegos Panamericanos al ComitÃ© Ejecutivo de la Odepa para su aprobaciÃ³n',2),(9,3,'3.  El Proyecto de Programa de los Juegos Panamericanos tendrÃ¡ como base los siguientes aspectos:',2),(10,4,'4.  El Programa incluirÃ¡ los deportes considerados en el Programa de los siguientes Juegos OlÃ­mpicos y que actualmente son:',2),(11,5,'5.  Para que un deporte no olÃ­mpico sea elegible para formar parte del Programa de los Juegos Panamericanos, su FederaciÃ³n Internacional debe ser reconocida por la Odepa; al menos veinte (20) Miembros de la Odepa deberÃ¡n reconocer a su correspondiente FederaciÃ³n Nacional y el Estatuto de la ConfederaciÃ³n Deportiva Panamericana y la FederaciÃ³n Internacional deben presentarse a la ComisiÃ³n TÃ©cnica de la Odepa, junto con una descripciÃ³n detallada de las actividades de su deporte en AmÃ©rica. La ComisiÃ³n TÃ©cnica de la Odepa revisarÃ¡ estos documentos y harÃ¡ una recomendaciÃ³n al ComitÃ© Ejecutivo de la Odepa.',2),(12,1,'1.  Las competencias deportivas de los Juegos Panamericanos serÃ¡n consideradas oficiales siempre que, al	menos noventa (90)	dÃ­as	antes	del	comienzo	de	los	Juegos	Panamericanos, las inscripciones numÃ©ricas finales hayan sido hechas y se cumplan las siguientes condiciones:',3),(13,2,'2.  Si las condiciones mÃ­nimas establecidas en el numeral (1) no han sido cumplidas	al momento en que las inscripciones finales sean requeridas por nombre (de 15 a 21 dÃ­as antes de la inauguraciÃ³n de los Juegos), el deporte, la disciplina o la prueba no se realizarÃ¡ y el ComitÃ© Organizador, previa consulta con la Odepa, notificarÃ¡	la decisiÃ³n a los CON inscritos, dentro de las 4 horas posteriores a la toma de la decisiÃ³n.',3),(14,1,'1.  Para participar en los Juegos Panamericanos, un competidor es elegible si estÃ¡ dispuesto a observar, acatar y cumplir el Estatuto de la Odepa y el Reglamento de los Juegos Panamericanos; asÃ­ como, los reglamentos de su ComitÃ© OlÃ­mpico Nacional y de la FederaciÃ³n Internacional y/o ConfederaciÃ³n Deportiva Panamericana del deporte que representa.',4),(15,2,'2.  No existen lÃ­mites de edad para los competidores en los Juegos Panamericanos, excepto cuando haya sido previamente aprobado y notificado a la	 Odepa por la FederaciÃ³n Internacional y/o ConfederaciÃ³n Panamericana que gobierna un deporte especÃ­fico.',4),(16,3,'3.  El Estatuto de la Odepa en su ArtÃ­culo XXII, acÃ¡pites 4 y 5, sobre la nacionalidad de los atletas participantes en los Juegos Panamericanos, establece que: (4) â€œTodo competidor que posea simultÃ¡neamente la nacionalidad de dos o mÃ¡s paÃ­ses podrÃ¡ representar a uno de ellos de su elecciÃ³n. Sin embargo, despuÃ©s de haber representado a un paÃ­s en los Juegos Panamericanos, en campeonatos mundiales o regionales reconocidos por una ConfederaciÃ³n Deportiva Panamericana competente, no podrÃ¡ representar a otro paÃ­s, a menos que satisfaga las condiciones previstas en el pÃ¡rrafo 5 mÃ¡s abajo, aplicables a las personas que hayan cambiado de nacionalidad o adquirido una nueva.',4),(17,1,'1.  Sobre la inscripciÃ³n de los atletas en los Juegos Panamericanos el Estatuto de la Odepa, en su ArtÃ­culo XXII, acÃ¡pites 6, 7 y 8, establece lo siguiente: (6) â€œSolo los Miembros de la Odepa podrÃ¡n inscribir competidores en los Juegos	Panamericanos.	El	derecho	de	aceptar	definitivamente	las	inscripciones	corresponde al ComitÃ© Ejecutivo de la Odepa.â€ (7) â€œLos miembros de la Odepa solo ejercerÃ¡n este derecho sobre la base de las recomendaciones de inscripciÃ³n formuladas por sus federaciones nacionales. Si el Miembro de la Odepa las aprueba, transmitirÃ¡ estas inscripciones al ComitÃ© Organizador, que tendrÃ¡ la obligaciÃ³n de acusar recibo. Cada Miembro de la Odepa deberÃ¡ investigar la validez de las inscripciones propuestas por las federaciones nacionales y asegurarse de que ningÃºn candidato ha sido rechazado por razones raciales, religiosas o polÃ­ticas o como consecuencia de cualquier otra forma de discriminaciÃ³n.â€ (8) â€œLa participaciÃ³n en los Juegos Panamericanos implica para todo competidor, el compromiso de respetar las disposiciones contenidas en el Estatuto de la Odepa, el Reglamento de los Juegos Panamericanos y los Reglamentos TÃ©cnicos de cada deporte. El Miembro de la Odepa que inscribe a un competidor asegura, bajo su responsabilidad, que dicho competidor tiene plena conciencia de su compromiso de respetar el Estatuto de la Odepa, el Reglamento de los Juegos Panamericanos y el CÃ³digo Mundial Antidopaje.',5),(18,2,'2.  El ComitÃ© Organizador de los Juegos Panamericanos enviarÃ¡ los formularios oficiales	de	inscripciÃ³n,	a	los	Miembros	de	la	Odepa,	como	mÃ­nimo	seis	(6)	meses antes de la fecha de inauguraciÃ³n de los Juegos Panamericanos. Los formularios de inscripciÃ³n deberÃ¡n especificar todas las disciplinas y prueba de cada deporte que han sido incluidas en el Programa de los Juegos Panamericanos.',5),(19,1,'1.  Las protestas o reclamaciones relacionadas con la elegibilidad de un competidor, deberÃ¡n ser presentadas, por su Jefe de MisiÃ³n o el representante de este, junto con un depÃ³sito de $100.00 USD (cien dÃ³lares), al ComitÃ© Ejecutivo de la Odepa, el que decidirÃ¡ sobre el asunto. El ComitÃ© Ejecutivo de la Odepa podrÃ¡ actuar con la presencia de un mÃ­nimo de tres de sus miembros. El anÃ¡lisis de los casos tendrÃ¡ en cuenta lo siguiente:',6),(20,2,'2.  Las protestas sobre asuntos tÃ©cnicos realizadas, de acuerdo a las Reglas de las Federaciones Internacionales, serÃ¡n dirigidas a la autoridad actuante, Juez o Ãrbitro, de acuerdo a la nomenclatura utilizada en cada deporte, quien, en coordinaciÃ³n con la FederaciÃ³n Internacional y/o ConfederaciÃ³n Deportiva Panamericana, decidirÃ¡ en primera instancia. La decisiÃ³n puede ser recurrida ante el Jurado de Apelaciones, actuante en el deporte en cuestiÃ³n, de acuerdo a las reglas del deporte correspondiente.',6),(21,1,'1.  Solo los competidores, asÃ­ como el personal mÃ©dico y paramÃ©dico y oficiales de equipo, de acuerdo a las cuotas aprobadas y que realicen servicios esenciales para los competidores, inscritos por su correspondiente CON, serÃ¡n alojados en la Villa Panamericana.',7),(22,2,'2.  Las cuotas para oficiales de equipo alojados en la Villa Panamericana, para cada Miembro de la Odepa, son fijadas por el ComitÃ© Ejecutivo de la Odepa y no podrÃ¡n exceder el cuarenta por ciento (40%) del nÃºmero de competidores inscritos por cada Miembro de la Odepa.',7),(25,3,'3.  Los oficiales de competencia	(Ã¡rbitros,	jueces, cronometristas, inspectores y otro personal tÃ©cnico reglamentario) deberÃ¡n ser designados por la FederaciÃ³n Internacional y/o ConfederaciÃ³n Deportiva Panamericana respectiva, segÃºn sus reglamentos y de acuerdo con la retroalimentaciÃ³n y transporte local durante los Juegos Panamericanos y, en el caso que estÃ© establecido, honorarios para dichos	oficiales	de	competencia,	son	responsabilidad	del	ComitÃ©	Organizador.',7),(26,1,'1.  Villa Panamericana:',8);
+/*!40000 ALTER TABLE `norma` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oficinasorganigrama`
+--
+
+DROP TABLE IF EXISTS `oficinasorganigrama`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oficinasorganigrama` (
+  `idSecretaria` int(11) NOT NULL AUTO_INCREMENT,
+  `se_nombre` varchar(60) NOT NULL,
+  `se_tipo` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`idSecretaria`),
+  KEY `idSecretaria` (`idSecretaria`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oficinasorganigrama`
+--
+
+LOCK TABLES `oficinasorganigrama` WRITE;
+/*!40000 ALTER TABLE `oficinasorganigrama` DISABLE KEYS */;
+INSERT INTO `oficinasorganigrama` VALUES (1,'SecreterarÃ­a Ejecutiva',''),(2,'Oficina de AdministraciÃ³n',''),(3,'Oficina de Recursos Humanos',''),(4,'Oficina de Voluntariado',''),(5,'Oficina de AcreditaciÃ³n',''),(6,'Oficina de AsesorÃ­a JurÃ­dica',''),(7,'Oficina de Planeamiento, Presupuesto y ModernizaciÃ³n',''),(8,'Oficina de CoordinaciÃ³n de Riesgos y Legado',''),(10,'DirecciÃ³n Ejecutiva','\0'),(11,'DirecciÃ³n de IntegraciÃ³n','\0'),(12,'DirecciÃ³n de Proyectos e Infraestructura Definitiva','\0'),(13,'DirecciÃ³n de Operaciones','\0'),(14,'DirecciÃ³n de Desarrollo TecnolÃ³gico y Transmisiones','\0'),(15,'DirecciÃ³n de Comunicaciones','\0');
+/*!40000 ALTER TABLE `oficinasorganigrama` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pais`
+--
+
+DROP TABLE IF EXISTS `pais`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pais` (
+  `idPais` int(11) NOT NULL AUTO_INCREMENT,
+  `NombrePais` varchar(40) DEFAULT NULL,
+  `BanderaPais` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idPais`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pais`
+--
+
+LOCK TABLES `pais` WRITE;
+/*!40000 ALTER TABLE `pais` DISABLE KEYS */;
+INSERT INTO `pais` VALUES (1,'Estados Unidos','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\estadosUnidos.jpg'),(2,'Cuba','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\cuba.jpg'),(3,'CanadÃ¡','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\canada.jpg'),(4,'Brasil','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\brasil.jpg'),(5,'Argentina','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\argentina.jpg'),(6,'Mexico','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\mexico.jpg'),(7,'Colombia',' C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\colombia.jpg'),(8,'Venezuela','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\venezuela.jpg'),(9,'Chile','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\chile.jpg'),(10,'RepÃºblica Dominicana','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\republicaDominicana.jpg'),(11,'Puerto Rico','C:\\xampp\\htdocs\\WEPLAY\\vista\\mgc\\img\\banderas\\puertoRico.jpg'),(12,'Ecuador',NULL),(13,'Jamaica',NULL),(14,'Guatemala',NULL),(15,'Uruguay',NULL),(16,'Trinidad y Tobago',NULL),(17,'Bahamas',NULL),(18,'PerÃº',NULL),(19,'Antillas Neerlandesas',NULL),(20,'Costa Rica',NULL),(21,'PanamÃ¡',NULL),(22,'Surinam',NULL),(23,'Guyana',NULL),(24,'El Salvador',NULL),(25,'Bermudas',NULL),(26,'Islas CaimÃ¡n',NULL),(27,'Antigua y Barbuda',NULL),(28,'Santa LucÃ­a',NULL),(29,'Nicaragua',NULL),(30,'Islas Virgenes de los Estados Unidos',NULL),(31,'Barbados',NULL),(32,'HaitÃ­',NULL),(33,'Dominica',NULL),(34,'San CristÃ³bal Y Nieves',NULL),(35,'Paraguay',NULL),(36,'Bolivia',NULL),(37,'Honduras',NULL),(38,'Granada',NULL),(39,'Belice',NULL),(40,'San Vicente y las Granadinas',NULL),(41,'Aruba',NULL),(42,'Islas Virgenes BritÃ¡nicas',NULL);
+/*!40000 ALTER TABLE `pais` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `participantegrupal`
+--
+
+DROP TABLE IF EXISTS `participantegrupal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `participantegrupal` (
+  `idPartGrupal` int(11) NOT NULL AUTO_INCREMENT,
+  `idEventoFK` int(11) NOT NULL,
+  `idEquipo1FK` int(11) NOT NULL,
+  `idEquipo2FK` int(11) NOT NULL,
+  PRIMARY KEY (`idPartGrupal`),
+  KEY `FK_partGrupal_Equipo1` (`idEquipo1FK`),
+  KEY `FK_partGrupal_Equipo2` (`idEquipo2FK`),
+  KEY `Fk_partGrupal_eventos` (`idEventoFK`),
+  CONSTRAINT `FK_partGrupal_Equipo1` FOREIGN KEY (`idEquipo1FK`) REFERENCES `equipo` (`idEquipo`),
+  CONSTRAINT `FK_partGrupal_Equipo2` FOREIGN KEY (`idEquipo2FK`) REFERENCES `equipo` (`idEquipo`),
+  CONSTRAINT `Fk_partGrupal_eventos` FOREIGN KEY (`idEventoFK`) REFERENCES `eventos` (`idEvento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `participantegrupal`
+--
+
+LOCK TABLES `participantegrupal` WRITE;
+/*!40000 ALTER TABLE `participantegrupal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `participantegrupal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `participanteindividual`
+--
+
+DROP TABLE IF EXISTS `participanteindividual`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `participanteindividual` (
+  `idPartIndividual` int(11) NOT NULL AUTO_INCREMENT,
+  `idDeportistasFK` int(11) NOT NULL,
+  `idPaisFK` int(11) NOT NULL,
+  `idEventoFK` int(11) NOT NULL,
+  PRIMARY KEY (`idPartIndividual`),
+  KEY `FK_partiipanteIndividual_Eventos` (`idEventoFK`),
+  KEY `FK_partIndividual_deportistas` (`idDeportistasFK`),
+  KEY `FK_Partiindividual_Pais` (`idPaisFK`),
+  CONSTRAINT `FK_Partiindividual_Pais` FOREIGN KEY (`idPaisFK`) REFERENCES `pais` (`idPais`),
+  CONSTRAINT `FK_partIndividual_deportistas` FOREIGN KEY (`idDeportistasFK`) REFERENCES `deportistas` (`idDeportistas`),
+  CONSTRAINT `FK_partiipanteIndividual_Eventos` FOREIGN KEY (`idEventoFK`) REFERENCES `eventos` (`idEvento`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `participanteindividual`
+--
+
+LOCK TABLES `participanteindividual` WRITE;
+/*!40000 ALTER TABLE `participanteindividual` DISABLE KEYS */;
+INSERT INTO `participanteindividual` VALUES (1,1,1,1),(2,2,9,1),(8,8,18,1),(9,9,18,1),(10,10,18,1),(11,11,18,1),(12,12,18,1),(13,13,18,1),(14,14,18,1),(15,15,18,1),(16,16,18,1);
+/*!40000 ALTER TABLE `participanteindividual` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pregfrecareas`
+--
+
+DROP TABLE IF EXISTS `pregfrecareas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pregfrecareas` (
+  `idareaPreFrePK` int(11) NOT NULL AUTO_INCREMENT,
+  `nomAre` varchar(255) NOT NULL,
+  PRIMARY KEY (`idareaPreFrePK`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pregfrecareas`
+--
+
+LOCK TABLES `pregfrecareas` WRITE;
+/*!40000 ALTER TABLE `pregfrecareas` DISABLE KEYS */;
+INSERT INTO `pregfrecareas` VALUES (1,'JUEGOS PANAMERICANOS'),(2,'VOLUNTARIADO'),(3,'CONVOCATORIAS'),(4,'SEDES'),(5,'COMPETENCIAS'),(6,'TICKETS'),(7,'PROVEEDORES'),(8,'CONTACTO');
+/*!40000 ALTER TABLE `pregfrecareas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `preguntasfrecuentes`
+--
+
+DROP TABLE IF EXISTS `preguntasfrecuentes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `preguntasfrecuentes` (
+  `idPreFrePK` int(11) NOT NULL AUTO_INCREMENT,
+  `pregResCont` varchar(255) NOT NULL,
+  `idAreaPreFreFK` int(11) NOT NULL,
+  PRIMARY KEY (`idPreFrePK`),
+  KEY `FK_pregFrec_Areas` (`idAreaPreFreFK`),
+  CONSTRAINT `FK_pregFrec_Areas` FOREIGN KEY (`idAreaPreFreFK`) REFERENCES `pregfrecareas` (`idareaPreFrePK`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `preguntasfrecuentes`
+--
+
+LOCK TABLES `preguntasfrecuentes` WRITE;
+/*!40000 ALTER TABLE `preguntasfrecuentes` DISABLE KEYS */;
+INSERT INTO `preguntasfrecuentes` VALUES (1,'1. Â¿CuÃ¡ndo se llevarÃ¡n a cabo los Juegos Panamericanos?\r\nLos Juegos se llevarÃ¡n a cabo desde el 26 de julio al 11 de agosto. ',1),(2,'2. Â¿CuÃ¡ntos deportes y disciplinas tendrÃ¡n los Juegos Panamericanos? Los Juegos Panamericanos contarÃ¡n con 39 deportes y 61 disciplinas. ',1),(3,'3. Â¿CuÃ¡ntos deportistas participarÃ¡n en los Juegos Panamericanos?\r\nEn los Juegos Panamericanos participarÃ¡n 6680 deportistas. ',1),(4,'4. Â¿CuÃ¡ntas delegaciones participarÃ¡n en los Juegos Panamericanos?\r\nParticiparÃ¡n 41 delegaciones en los Juegos Panamericanos.',1),(5,'1. Â¿CuÃ¡ntos voluntarios podrÃ¡n participar en los jeugos Panamericanos Lima 2019? Necesitamos 12mil voluntarios y voluntarias para los XVIII Juegos Panamericanos. La convocatoria de voluntarios y voluntarias estarÃ¡ abierta a nivel ancional e internacional.',2),(6,'2. Â¿Hay un lÃ­mite de edad?\r\nLos lÃ­mites los pones tÃº. Solo debes ser mayor de 16 aÃ±os al 01 de abril de 2019, dÃ­a en el cual se da inicio a las actividades previas de los Juegos Panamericanos. ',2),(7,'3. Â¿Las personas con discapacidad pueden participar en el programa de Voluntariado?\r\nÂ¡Te necesitamos! Esperamos que las personas con discapacidad participen en los Juegos Panamericanos y/o en los Juegos Parapanamericanos. ',2),(8,'4. Si soy extranjero, Â¿tambiÃ©n puedo ser voluntario o voluntaria de los Juegos Panamericanos Lima 2019?\r\nÂ¡Por supuesto! Las inscripciones del Programa de Voluntariado se lanzarÃ¡n a nivel nacional como internacional. ',2),(9,'1. Â¿CÃ³mo puedo postular a las convocatorias de Lima2019?\r\nPuedes conocer las convocatorias laborales en la secciÃ³n Trabaja con Nosotros ',3),(10,'2. Â¿CÃ³mo me puedo contactar con el Ã¡rea de selecciÃ³n de personal?\r\nSi tienes una consulta sobre un proceso puedes escribir a consultascas@lima2019.pe ',3),(11,'3. He postulado a una convocatoria y tengo dudas sobre el proceso Â¿CÃ³mo puedo contactarlos?\r\nPuedes escribir a convocatorias@lima2019.pe ',3),(12,'4. Si soy extranjero, Â¿puedo postular a una convocatoria?\r\nTodos pueden postular siempre y cuando cumplan con los requisitos y la correcta presentaciÃ³n de los formatos y/o anexos segÃºn lo indican las bases. ',3),(13,'1. Â¿CuÃ¡l es el nÃºmero de obras listas para los Juegos Lima 2019?\r\nActualmente contamos con 10 sedes entregadas para la realizaciÃ³n de los juegos Lima 2019. ',4),(14,'2. Â¿CuÃ¡ndo estarÃ¡n listas las demÃ¡s obras?\r\nLa infraestructura en construcciÃ³n estarÃ¡ lista en marzo de 2019, fecha en la que estarÃ¡ ejecutada el 100% de las obras. ',4),(15,'3. Â¿CuÃ¡l es la sede de inauguraciÃ³n y clausura de los Juegos Lima 2019?\r\nLa inauguraciÃ³n y clausura de los Juegos Lima 2019 serÃ¡ en el Estadio Nacional. ',4),(16,'4. Â¿CuÃ¡ntas sedes de competencia tiene Lima 2019?\r\nContamos con 19 sedes de competencia para la realizaciÃ³n de los Juegos Panamericanos y Parapanamericanos. ',4),(17,'1. Â¿EstÃ¡ lista la programaciÃ³n de las competencias?\r\nLa programaciÃ³n final estÃ¡ lista, los detalles los puedes ver a travÃ©s de nuestros canales oficiales. ',5),(19,'2. Â¿CÃ³mo puedo competir en los Juegos Panamericanos?\r\nPara participar en los Juegos Panamericanos debes ser un atleta de alto rendimiento y ser seleccionado por la federaciÃ³n nacional de tu deporte. ',5),(20,'3. Â¿CÃ³mo puedo saber el sistema de clasificaciÃ³n a Lima 2019?\r\nPuedes conocer el manual de clasificaciÃ³n a nuestros juegos aquÃ­ http://www.panamsports.org/downloads/pdf/manual-de-sistemas-de-clasificacion-lima-2019.pdf ',5),(21,'4. Â¿CuÃ¡ntas delegaciones participarÃ¡n en los Juegos Panamericanos?\r\nParticiparÃ¡n 41 delegaciones en los Juegos Panamericanos. ',5),(22,'1. Â¿CuÃ¡ndo inicia la venta de tickets?\r\nLa venta de tickets iniciarÃ¡ el 27 de mayo. Estaremos informando todos los detalles a travÃ©s de nuestros canales oficiales. ',6),(23,'1. Â¿CÃ³mo puedo ser proveedor de los Juegos?\r\nPuedes conocer los procesos de contrataciones que se llevaron o se estÃ¡n llevando en la secciÃ³n de Contrataciones. ',7),(24,'1. Â¿A quÃ© telÃ©fono me puedo comunicar?\r\nEl nÃºmero de nuestra central telefÃ³nica es 4105500. Si estÃ¡s fuera de PerÃº deberÃ¡s anteponerle el cÃ³digo (511). ',8),(25,'2. QuisiÃ©ramos compartir una nota de prensa con ustedes, Â¿a quÃ© correo la podemos compartir?\r\nPuedes escribir a prensa@lima2019.pe para compartir tu informaciÃ³n. ',8);
+/*!40000 ALTER TABLE `preguntasfrecuentes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranking`
+--
+
+DROP TABLE IF EXISTS `ranking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranking` (
+  `idRanking` int(11) NOT NULL,
+  `idDeportista` int(11) DEFAULT NULL,
+  `idDeporte` int(11) DEFAULT NULL,
+  `idMedalla` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idRanking`),
+  KEY `FK_Ranking_Deportes` (`idDeporte`),
+  KEY `FK_Ranking_Deportistas` (`idDeportista`),
+  KEY `FK_Ranking_Medallas` (`idMedalla`),
+  CONSTRAINT `FK_Ranking_Deportes` FOREIGN KEY (`idDeporte`) REFERENCES `deportes` (`idDeporte`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Ranking_Deportista` FOREIGN KEY (`idDeportista`) REFERENCES `deportistas` (`idDeportistas`),
+  CONSTRAINT `FK_Ranking_Medallas` FOREIGN KEY (`idMedalla`) REFERENCES `medallas` (`idMedalla`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranking`
+--
+
+LOCK TABLES `ranking` WRITE;
+/*!40000 ALTER TABLE `ranking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ranking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reglamento`
+--
+
+DROP TABLE IF EXISTS `reglamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reglamento` (
+  `idReglamento` int(11) NOT NULL,
+  `descripReglamento` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`idReglamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reglamento`
+--
+
+LOCK TABLES `reglamento` WRITE;
+/*!40000 ALTER TABLE `reglamento` DISABLE KEYS */;
+INSERT INTO `reglamento` VALUES (1,'reglamento de futbol');
+/*!40000 ALTER TABLE `reglamento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporteentrada`
+--
+
+DROP TABLE IF EXISTS `reporteentrada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reporteentrada` (
+  `idReporteEntrada` int(11) NOT NULL,
+  `idDeporte` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idReporteEntrada`),
+  KEY `FK_ReporteEntrada_Deportes` (`idDeporte`),
+  CONSTRAINT `FK_ReporteEntrada_Deportes` FOREIGN KEY (`idDeporte`) REFERENCES `deportes` (`idDeporte`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reporteentrada`
+--
+
+LOCK TABLES `reporteentrada` WRITE;
+/*!40000 ALTER TABLE `reporteentrada` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reporteentrada` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `representantes`
+--
+
+DROP TABLE IF EXISTS `representantes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `representantes` (
+  `IdRepresentateORG` int(11) NOT NULL,
+  `DescripcionR` text,
+  PRIMARY KEY (`IdRepresentateORG`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `representantes`
+--
+
+LOCK TABLES `representantes` WRITE;
+/*!40000 ALTER TABLE `representantes` DISABLE KEYS */;
+INSERT INTO `representantes` VALUES (1,'Representante del Ministerio de Transportes y Comunicaciones.'),(2,'Representante del Ministerio de Trasportes y Comunicaciones.'),(3,'Representante de la Municipalidad Metropolitana de Lima.'),(4,'Representante de la Municipalidad Metropolitana de Lima.'),(5,'Representante del Gobierno Regional del Callao.'),(6,'Presidente del comite OlÃ­mpico Peruano.'),(7,'Representante del comite Olimpico Peruano.'),(8,'Representante del Instituto Peruano del Deporte.'),(9,'Representante del Ministerio de Economia y Finanzas.'),(10,'Representante del Ministerio de Vivienda y ContrucciÃ³n.'),(11,'Representante del Ministerio de EducaciÃ³n.'),(12,'Representate del Comite OlÃ­mpico Internacional.'),(13,'Presidente de la AsociaciÃ³n Nacional ParalÃ­mpica del PerÃº.');
+/*!40000 ALTER TABLE `representantes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resultadogrupal`
+--
+
+DROP TABLE IF EXISTS `resultadogrupal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resultadogrupal` (
+  `idResGrupal` int(11) NOT NULL AUTO_INCREMENT,
+  `idPartGrupalFK` int(11) NOT NULL,
+  `fechaResultadoGr` date NOT NULL,
+  `res_gr_puesto` varchar(25) NOT NULL,
+  PRIMARY KEY (`idResGrupal`),
+  KEY `FK_resGrupal_partGrupal` (`idPartGrupalFK`),
+  CONSTRAINT `FK_resGrupal_partGrupal` FOREIGN KEY (`idPartGrupalFK`) REFERENCES `participantegrupal` (`idPartGrupal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resultadogrupal`
+--
+
+LOCK TABLES `resultadogrupal` WRITE;
+/*!40000 ALTER TABLE `resultadogrupal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resultadogrupal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resultadoindividual`
+--
+
+DROP TABLE IF EXISTS `resultadoindividual`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resultadoindividual` (
+  `idResIndividual` int(11) NOT NULL AUTO_INCREMENT,
+  `idPartIndividualFK` int(11) NOT NULL,
+  `fechaResultado` date NOT NULL,
+  `res_in_puesto` varchar(25) NOT NULL,
+  PRIMARY KEY (`idResIndividual`),
+  KEY `ResIndividual_partIndividual_FK` (`idPartIndividualFK`),
+  CONSTRAINT `ResIndividual_partIndividual_FK` FOREIGN KEY (`idPartIndividualFK`) REFERENCES `participanteindividual` (`idPartIndividual`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resultadoindividual`
+--
+
+LOCK TABLES `resultadoindividual` WRITE;
+/*!40000 ALTER TABLE `resultadoindividual` DISABLE KEYS */;
+INSERT INTO `resultadoindividual` VALUES (1,1,'2019-05-30','1'),(9,1,'0000-00-00','16'),(10,1,'2019-05-31','23'),(11,16,'2019-05-31','12'),(12,9,'2019-05-31','1'),(13,10,'2019-05-31','1'),(14,1,'2019-06-10','4');
+/*!40000 ALTER TABLE `resultadoindividual` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seccionreglamento`
+--
+
+DROP TABLE IF EXISTS `seccionreglamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seccionreglamento` (
+  `idSecRegPK` int(11) NOT NULL AUTO_INCREMENT,
+  `numSec` int(11) NOT NULL,
+  `TitSec` varchar(255) NOT NULL,
+  PRIMARY KEY (`idSecRegPK`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seccionreglamento`
+--
+
+LOCK TABLES `seccionreglamento` WRITE;
+/*!40000 ALTER TABLE `seccionreglamento` DISABLE KEYS */;
+INSERT INTO `seccionreglamento` VALUES (1,1,'SECCION I OBJETIVOS'),(2,2,'SECCIÃ“N II PROGRAMA DE LOS JUEGOS PANAMERICANOS'),(3,3,'SECCIÃ“N III COMPETENCIAS DE LOS JUEGOS PANAMERICANOS\r\n'),(4,4,'SECCIÃ“N IV ELEGIBILIDAD DE LOS ATLETAS PARA PARTICIPAR EN LOS JUEGOS PANAMERICANOS\r\n'),(5,5,'SECCIÃ“N V INSCRIPCIONES DE LOS PARTICIPANTES EN LOS JUEGOS PANAMERICANOS\r\n'),(6,6,'SECCIÃ“N VI PROTESTAS Y RECLAMACIONES DURANTE LOS JUEGOS PANAMERICANOS\r\n'),(7,7,'SECCIÃ“N VII OFICIALES, PERSONAL MÃ‰DICO Y PARAMÃ‰DICO, OFICIALES TÃ‰CNICOS, JUECES Y ÃRBITROS QUE ACTUARÃN EN LOS JUEGOS PANAMERICANOS\r\n'),(8,8,'SECCIÃ“N VIII ALOJAMIENTO DE LOS PARTICIPANTES EN LOS JUEGOS PANAMERICANOS\r\n'),(9,9,'SECCIÃ“N IX ACREDITACIÃ“N DE LOS PARTICIPANTES EN LOS JUEGOS PANAMERICANOS\r\n'),(10,10,'SECCIÃ“N X REUNIÃ“N DE JEFES DE MISIÃ“N\r\nSECCIÃ“N X REUNIÃ“N DE JEFES DE MISIÃ“N\r\n');
+/*!40000 ALTER TABLE `seccionreglamento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sedes`
+--
+
+DROP TABLE IF EXISTS `sedes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sedes` (
+  `idSede` int(11) NOT NULL,
+  `NombreSede` varchar(255) NOT NULL,
+  `imgSede` varchar(255) NOT NULL,
+  `DireccionSede` varchar(50) NOT NULL,
+  PRIMARY KEY (`idSede`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sedes`
+--
+
+LOCK TABLES `sedes` WRITE;
+/*!40000 ALTER TABLE `sedes` DISABLE KEYS */;
+INSERT INTO `sedes` VALUES (1,'Lima sur','imagen en proceso','Av. 123'),(2,'Lima norte','en proceso','Av. 123'),(3,'Lima Centro','en proceso','Av. 123'),(4,'Al Sur de Lima','en proceso','Av. 123');
+/*!40000 ALTER TABLE `sedes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stockasientos`
+--
+
+DROP TABLE IF EXISTS `stockasientos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stockasientos` (
+  `idStockAsiento` int(11) NOT NULL,
+  `CantiDisponible` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idStockAsiento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stockasientos`
+--
+
+LOCK TABLES `stockasientos` WRITE;
+/*!40000 ALTER TABLE `stockasientos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stockasientos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subnorma`
+--
+
+DROP TABLE IF EXISTS `subnorma`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subnorma` (
+  `idSubNor` int(11) NOT NULL AUTO_INCREMENT,
+  `numSubNor` char(255) NOT NULL,
+  `contSubNor` text NOT NULL,
+  `normaFK` int(11) NOT NULL,
+  PRIMARY KEY (`idSubNor`),
+  KEY `FK_SubNorma_Norma` (`normaFK`),
+  CONSTRAINT `FK_SubNorma_Norma` FOREIGN KEY (`normaFK`) REFERENCES `norma` (`idNormaPK`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subnorma`
+--
+
+LOCK TABLES `subnorma` WRITE;
+/*!40000 ALTER TABLE `subnorma` DISABLE KEYS */;
+INSERT INTO `subnorma` VALUES (1,'3.1','3.1  La totalidad de deportes, disciplinas y pruebas incluidos en el Programa de los siguientes Juegos OlÃ­mpicos.',3),(2,'3.2','3.2  Los deportes que consideran los Juegos Panamericanos como evento de calificaciÃ³n	olÃ­mpica.	El	ComitÃ©	Ejecutivo	de	la	Odepa,	en	coordinaciÃ³n	con	la FederaciÃ³n Internacional y/o ConfederaciÃ³n Deportiva Panamericana correspondiente, podrÃ¡ establecer otras alternativas, a travÃ©s de las cuales se vinculen los resultados de los atletas y equipos en los Juegos Panamericanos con su participaciÃ³n en los siguientes Juegos OlÃ­mpicos.',3),(3,'3.3','3.3  Aquellos deportes, disciplinas y pruebas cuya FederaciÃ³n Internacional y/o ConfederaciÃ³n Deportiva Panamericana hayan alcanzado un nivel adecuado en el desarrollo de sus actividades en AmÃ©rica. ',3),(4,'3.4','3.4  Los deportes y eventos con mayor participaciÃ³n y popularidad en AmÃ©rica',3),(5,'3.5','3.5  Los deportes en que participen hombres y mujeres.',3),(6,'4.1','4.1  Deportes del Programa OlÃ­mpico (28 deportes): ATLETISMO Masculino y Femenino, - BÃDMINTON Masculino y	Femenino - BALONMANO Masculino y Femenino - BALONCESTO Masculino y Femenino - BÃ‰ISBOL Masculino - BOXEO Masculino - CANOTAJE Masculino y Femenino -	CICLISMO	Masculino y Femenino - ECUESTRE Masculino y Femenino - ESGRIMA Masculino y Femenino -	FÃšTBOL Masculino y Femenino - GIMNASIA Masculino y Femenino - HOCKEY SOBRE CÃ‰SPED Masculino	y Femenino - JUDO Masculino	y Femenino - LEVANTAMIENTO DE PESAS	Masculino	y Femenino - LUCHA Masculino y Femenino - NATACIÃ“N Masculino y Femenino - PENTATLÃ“N MODERNO Masculino y Femenino - REMO Masculino y Femenino - SOFTBOL Femenino - TAE KWON DO Masculino y Femenino - TENIS Masculino y Femenino - TENIS	DE MESA Masculino	y Femenino - TIRO Masculino y	Femenino - TIRO CON ARCO Masculino y	Femenino - TRIATLÃ“N Masculino y Femenino - VELA Masculino y Femenino - VOLEIBOL Masculino y Femenino.',10),(7,'4.2','4.2 Las disciplinas y pruebas de cada deporte olÃ­mpico serÃ¡n, sin excepciÃ³n, las aprobadas por el ComitÃ© OlÃ­mpico Internacional para los Juegos OlÃ­mpicos inmediatamente posteriores a los Juegos Panamericanos.',10),(8,'4.3','4.3 Los deportes, disciplinas y pruebas pueden ser modificados	por el ComitÃ© OlÃ­mpico Internacional. Si este fuera el caso, la lista de deportes seÃ±alada en el AcÃ¡pite 4.1 precedente, se ajustarÃ¡ a lo establecido por el COI.',10),(9,'1.1','1.1 Para deportes individuales, un mÃ­nimo de ocho (8) comitÃ©s olÃ­mpicos nacionales (CON) deben haber presentado inscripciones.',12),(10,'1.2','1.2  Para deportes de equipo, hombres o mujeres, un mÃ­nimo de cinco (5) CON deben haber presentado inscripciones.',12),(11,'1.3','1.3  Para deportes individuales, en los que hay mÃ¡s de una prueba, individual y por equipos, un mÃ­nimo de cinco (5) CON deben haber presentado inscripciones.',12),(12,'1.1','1.1  Si una protesta o reclamaciÃ³n es presentada antes del inicio de los Juegos Panamericanos y la decisiÃ³n es adversa para el atleta involucrado, este no podrÃ¡ participar en los Juegos.',19),(13,'1.2','1.2  Si una decisiÃ³n adversa es adoptada despuÃ©s del inicio de los Juegos Panamericanos, el atleta deberÃ¡ ser descalificado de los Juegos Panamericanos.',19),(14,'1.3','1.3  En las competencias de deporte de equipo, el retiro del atleta o los atletas afectados por la decisiÃ³n adversa, puede resultar en la pÃ©rdida del partido o los partidos en los que haya o hayan participado dichos atletas.',19),(15,'1.1','1.1  Todos los competidores en los Juegos Panamericanos serÃ¡n alojados en la Villa Panamericana, a menos que otra decisiÃ³n haya sido tomada por el ComitÃ© Ejecutivo de la Odepa.',26),(16,'1.2','1.2  La Villa estarÃ¡ abierta al menos diez (10) dÃ­as antes de la ceremonia de inauguraciÃ³n y permanecerÃ¡ abierta al menos durante tres (3) dÃ­as posteriores a la ceremonia de clausura de los Juegos Panamericanos. La Villa Panamericana debe satisfacer las exigencias mÃ­nimas, similares a las establecidas por el COI para la organizaciÃ³n de la Villa de los atletas en unos Juegos OlÃ­mpicos.',26);
+/*!40000 ALTER TABLE `subnorma` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sysdiagrams`
+--
+
+DROP TABLE IF EXISTS `sysdiagrams`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sysdiagrams` (
+  `diagram_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) CHARACTER SET utf8 NOT NULL,
+  `principal_id` int(11) NOT NULL,
+  `version` int(11) DEFAULT NULL,
+  `definition` longblob,
+  PRIMARY KEY (`diagram_id`),
+  UNIQUE KEY `UK_principal_name` (`principal_id`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sysdiagrams`
+--
+
+LOCK TABLES `sysdiagrams` WRITE;
+/*!40000 ALTER TABLE `sysdiagrams` DISABLE KEYS */;
+INSERT INTO `sysdiagrams` VALUES (6,'Diagram_final',1,1,'\Ğ\Ïà¡±\Z\á\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0>\0\0şÿ	\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0]\0\0\0\0\0\0şÿÿÿ\0\0\0\0\0\0\0\0`\0\0\0ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿıÿÿÿ_\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0şÿÿÿ\0\0\0\0\0\0\0\0\0\Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0 \0\0\0!\0\0\0\"\0\0\0#\0\0\0$\0\0\0%\0\0\0&\0\0\0\'\0\0\0(\0\0\0)\0\0\0*\0\0\0+\0\0\0,\0\0\0-\0\0\0.\0\0\0/\0\0\00\0\0\01\0\0\02\0\0\03\0\0\04\0\0\05\0\0\06\0\0\07\0\0\08\0\0\09\0\0\0:\0\0\0;\0\0\0<\0\0\0=\0\0\0>\0\0\0?\0\0\0@\0\0\0A\0\0\0B\0\0\0C\0\0\0D\0\0\0E\0\0\0F\0\0\0G\0\0\0H\0\0\0I\0\0\0J\0\0\0K\0\0\0L\0\0\0M\0\0\0N\0\0\0O\0\0\0P\0\0\0Q\0\0\0R\0\0\0S\0\0\0T\0\0\0U\0\0\0V\0\0\0W\0\0\0X\0\0\0Y\0\0\0Z\0\0\0[\0\0\0\\\0\0\0şÿÿÿşÿÿÿ™\0\0\0şÿÿÿıÿÿÿb\0\0\0c\0\0\0d\0\0\0e\0\0\0f\0\0\0g\0\0\0h\0\0\0i\0\0\0j\0\0\0k\0\0\0l\0\0\0m\0\0\0n\0\0\0o\0\0\0p\0\0\0q\0\0\0r\0\0\0s\0\0\0t\0\0\0u\0\0\0v\0\0\0w\0\0\0x\0\0\0y\0\0\0z\0\0\0{\0\0\0|\0\0\0}\0\0\0~\0\0\0\0\0\0€\0\0\0R\0o\0o\0t\0 \0E\0n\0t\0r\0y\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÿÿÿÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0p\í4ú©\Õ^\0\0\0€\n\0\0\0\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÿÿÿÿÿÿÿÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¢&\0\0\0\0\0\0o\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\09Œ\0\0\0\0\0\0\0C\0o\0m\0p\0O\0b\0j\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÿÿÿÿÿÿÿÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\0\0\0\0\0\0\0\04\0\nP\0\0€‰\0\0\0\0ÿÿ\0\0\0‰\0\0\0\0}\0\0¹‚\0\0 D\0\0ó­\0i÷\0\0Nÿÿ¼M\0\0Ş€[ñ•\Ğ° \0ª\0½\Ë\\\0\0\00\0\0\0\0\0\0\0\0\0<\0k\0\0\0	\0\0\0\0\0\0\0\Ù\æ°\é\Ğ­Q\0 \ÉW9ô;„a\ÇC…5)†\á\ÕRø 2}²\Øb•B˜\'<%¢\Ú-\0\0(\0C\0\0\0\0\0\0\0SDM\Ò\Ñc\0`—\Ò\ßH4\É\Òwyw\Øp\0[„\rœ\0\0(\0C\0\0\0\0\0\0\0QDM\Ò\Ñc\0`—\Ò\ßH4\É\Òwyw\Øp\0[„\rœ‚\0\0\0¬%\0\0\0ÿ\0ƒ\Ã\0\00\0¥	\0\0\0\0€\0\0\0¢\0\0\0€\0\0\0\0€SchGrid\0\î˜\0\0\Èd\0\0Asientos\0\08\0¥	\0\0\0\0€\0\0\0¬\0\0\0€\0\0\r\0\0€SchGrid\0(¹\0\06\Ø\0\0Auspiciadores\0\0\0\08\0¥	\0\0\0\0€\0\0\0²\0\0\0€\0\0\0\0€SchGrid\0x´\0\0ŞŠ\0\0CategoriaAsiento\0\0x\0¥	\0\0\0\0€\0\0\0b\0\0\0€\0\0M\0\0€Control\0_«\0\0\ã}\0\0Relación \'FK_Asientos_CategoriaAsiento\' entre \'CategoriaAsiento\' y \'Asientos\'\0\0\0\0\0(\0µ\0\0\0\0€\0\0\01\0\0\0k\0\0\0€\0\0Control\0®\0\0L‡\0\0\0\04\0¥	\0\0\0\0€\0\0\0¦\0\0\0€\0\0\n\0\0€SchGrid\0Lh\0\0P\Ü\0\0Ceremonias\0\0\0\0<\0¥	\0\0\0\0€\0\0\0´\0\0\0€\0\0\0\0€SchGrid\0€%\0\08\0ComiteOrganizador\0\0\0\0\08\0¥	\0\0\0\0€\0\0\0®\0\0\0€\0\0\0\0€SchGrid\00u\0\0Da\0\0Compra_Entradato\0\08\0¥	\0\0\0\0€	\0\0\0°\0\0\0€\0\0\0\0€SchGrid\0ò+\0\0(n\0\0ComprobantePago\0\0\08\0¥	\0\0\0\0€\n\0\0\0²\0\0\0€\0\0\0\0€SchGrid\0\Íÿÿ2ú\0\0DeporteDestacado\0\00\0¥	\0\0\0\0€\0\0\0¢\0\0\0€\0\0\0\0€SchGrid\0.¥ÿÿ^°\0\0Deportes\0\04\0¥	\0\0\0\0€\0\0\0¨\0\0\0€\0\0\0\0€SchGrid\0Œ\n\0\0F\æ\0\0Deportistasa\0\08\0¥	\0\0\0\0€\r\0\0\0®\0\0\0€\0\0\0\0€SchGrid\0^\Ïÿÿ6\0\0DetalleDeporte\0\0\0\08\0¥	\0\0\0\0€\0\0\0®\0\0\0€\0\0\0\0€SchGrids\"\0\0R\Ë\0\0DetalleEventos\0\0\0\08\0¥	\0\0\0\0€\0\0\0¬\0\0\0€\0\0\r\0\0€SchGridsòÁ\0\0 g\0\0EstadoAsiento\0\0\0\0p\0¥	\0\0\0\0€\0\0\0R\0\0\0€\0\0G\0\0€Control\0R³\0\0£i\0\0Relación \'FK_Asientos_EstadoAsiento\' entre \'EstadoAsiento\' y \'Asientos\'V\0\0(\0µ\0\0\0\0€\0\0\01\0\0\0e\0\0\0€\0\0Control\05´\0\08i\0\0\0\00\0¥	\0\0\0\0€\0\0\0 \0\0\0€\0\0\0\0€SchGrid\0`	\0\0ô°\0\0Eventos\0\0\04\0¥	\0\0\0\0€\0\0\0¨\0\0\0€\0\0\0\0€SchGrid\0ú2\0\0‚ª\0\0FechaEventot\0\00\0¥	\0\0\0\0€\0\0\0 \0\0\0€\0\0\0\0€SchGrids\Ğk\0\0\ÆÀ\0\0Galerias\0\08\0¥	\0\0\0\0€\0\0\0®\0\0\0€\0\0\0\0€SchGrid\0zX\0\0\æ‘\0\0HorarioEventosdo\0\0x\0¥	\0\0\0\0€\0\0\0Z\0\0\0€\0\0O\0\0€Controls]M\0\0¢¡\0\0Relación \'FK_HorarioEventos_FechaEvento\' entre \'FechaEvento\' y \'HorarioEventos\'\0\0(\0µ\0\0\0\0€\0\0\01\0\0\0m\0\0\0€\0\0Control\0\íP\0\0©\0\0\0\08\0¥	\0\0\0\0€\0\0\0¬\0\0\0€\0\0\r\0\0€SchGridsÔ”\0\0n¾\0\0Institucionale\0\0\0\00\0¥	\0\0\0\0€\0\0\0¢\0\0\0€\0\0\0\0€SchGrid\0†§ÿÿ6\Ø\0\0Medallas\0\08\0¥	\0\0\0\0€\Z\0\0\0¬\0\0\0€\0\0\r\0\0€SchGrids“\0\0b\Ù\0\0MenuPrincipalsdo\0\00\0¥	\0\0\0\0€\0\0\0\0\0\0€\0\0\0\0€SchGrid\0HŠ\0\0ŞŠ\0\0Monedad\0\0\0<\0¥	\0\0\0\0€\0\0\0¸\0\0\0€\0\0\0\0€SchGrid\0rœ\0\0xÿ\0\0PreguntasFrecuentes\0\0\00\0¥	\0\0\0\0€\0\0\0 \0\0\0€\0\0\0\0€SchGrid\0ü\ÖÿÿZ\Ò\0\0Ranking\0\0\04\0¥	\0\0\0\0€\0\0\0¦\0\0\0€\0\0\n\0\0€SchGridsT\Ùÿÿ<¥\0\0Reglamentont\0\08\0¥	\0\0\0\0€\0\0\0®\0\0\0€\0\0\0\0€SchGrid\0ğ¦ÿÿ\Úa\0\0ReporteEntrada\0\0\0\08\0¥	\0\0\0\0€ \0\0\0®\0\0\0€\0\0\0\0€SchGrid\0\ÜP\0\0\0Representantesdo\0\08\0¥	\0\0\0\0€!\0\0\0¬\0\0\0€\0\0\r\0\0€SchGrids8\Ç\0\0t\0\0StockAsientosgo\0\0\0p\0¥	\0\0\0\0€\"\0\0\0R\0\0\0€\0\0G\0\0€ControlsR³\0\0‡v\0\0Relación \'FK_Asientos_StockAsientos\' entre \'StockAsientos\' y \'Asientos\'\0\0\0(\0µ\0\0\0\0€#\0\0\01\0\0\0e\0\0\0€\0\0Control\0Ó¶\0\0\Íx\0\0\0\0<\0¥	\0\0\0\0€$\0\0\0´\0\0\0€\0\0\0\0€SchGrid\0€»\0\0‚õ\0\0TipoAuspiciadores\0\0\0\0\08\0¥	\0\0\0\0€%\0\0\0®\0\0\0€\0\0\0\0€SchGrid\0Lh\0\0ù\0\0TipoCeremoniasdo\0\0x\0¥	\0\0\0\0€&\0\0\0R\0\0\0€\0\0M\0\0€Control\0Kg\0\0m\í\0\0Relación \'FK_Ceremonias_TipoCeremonias\' entre \'TipoCeremonias\' y \'Ceremonias\'s\'\0\0(\0µ\0\0\0\0€\'\0\0\01\0\0\0k\0\0\0€\0\0Controls‘i\0\0\Çó\0\0\0\0<\0¥	\0\0\0\0€(\0\0\0´\0\0\0€\0\0\0\0€SchGrid\0¾¹\0\0v\Å\0\0TipoInstitucionales\0\0\04\0¥	\0\0\0\0€)\0\0\0¨\0\0\0€\0\0\0\0€SchGrid\0¨ÿÿşñ\0\0TipoMedallai\0\0l\0¥	\0\0\0\0€*\0\0\0R\0\0\0€\0\0C\0\0€Control\0#®ÿÿ\æ\0\0Relación \'FK_Medallas_TipoMedalla\' entre \'TipoMedalla\' y \'Medallas\'t\0\0(\0µ\0\0\0\0€+\0\0\01\0\0\0a\0\0\0€\0\0Control\0i°ÿÿx\ì\0\0\0\04\0¥	\0\0\0\0€,\0\0\0¦\0\0\0€\0\0\n\0\0€SchGrid\0ŞŠ\0\0¤\0\0TipoMonedara\0\04\0¥	\0\0\0\0€-\0\0\0ª\0\0\0€\0\0\0\0€SchGridsÜ›\0\0@\0TipoPregunta\0\0<\0¥	\0\0\0\0€.\0\0\0´\0\0\0€\0\0\0\0€SchGrid\0²óÿÿb$\0TipoRepresentante\0\0\0\0\04\0¥	\0\0\0\0€/\0\0\0¤\0\0\0€\0\0	\0\0€SchGrid\0r\0\0òv\0\0TipoSedeslai\0\04\0¥	\0\0\0\0€0\0\0\0¨\0\0\0€\0\0\0\0€SchGridsH?\0\0Lş\0\0TipoUsuarioo\0\00\0¥	\0\0\0\0€1\0\0\0¢\0\0\0€\0\0\0\0€SchGrids7\0\0ğ\Ò\0\0Usuarios\0\0,\0¥	\0\0\0\0€2\0\0\0š\0\0\0€\0\0\0\0€SchGridsò+\0\0\\Á\0\0Hora\0\0d\0¥	\0\0\0\0€3\0\0\0R\0\0\0€\0\0;\0\0€Control\0s?\0\0\n¸\0\0Relación \'FK_FechaEvento_Hora\' entre \'Hora\' y \'FechaEvento\'\0\0\0(\0µ\0\0\0\0€4\0\0\01\0\0\0Y\0\0\0€\0\0Control\0¹A\0\0Y½\0\0\0\0,\0¥	\0\0\0\0€5\0\0\0š\0\0\0€\0\0\0\0€SchGrid\0\Ôşÿÿ¬\0Pais\0\00\0¥	\0\0\0\0€6\0\0\0œ\0\0\0€\0\0\0\0€SchGrid\0ö	\0\0\æ‘\0\0Sedesid\0\0\0d\0¥	\0\0\0\0€7\0\0\0R\0\0\0€\0\09\0\0€Controlso\0\0Gˆ\0\0Relación \'FK_Sedes_TipoSedes\' entre \'TipoSedes\' y \'Sedes\'o\'\0\0\0(\0µ\0\0\0\0€8\0\0\01\0\0\0W\0\0\0€\0\0Control\0A\0\0È\0\0\0\0„\0¥	\0\0\0\0€9\0\0\0R\0\0\0€\0\0[\0\0€Control\0M¡\0\0ÿ\0Relación \'FK_PreguntasFrecuentes_TipoPregunta\' entre \'TipoPregunta\' y \'PreguntasFrecuentes\'\0\0\0(\0µ\0\0\0\0€:\0\0\01\0\0\0y\0\0\0€\0\0Control\0“£\0\0\Ó\0\0\0„\0¥	\0\0\0\0€;\0\0\0R\0\0\0€\0\0Y\0\0€Controlsu\Ä\0\0™\ë\0\0Relación \'FK_Auspiciadores_TipoAuspiciadores\' entre \'TipoAuspiciadores\' y \'Auspiciadores\'s\'\0\0\0(\0µ\0\0\0\0€<\0\0\01\0\0\0w\0\0\0€\0\0Control\0»\Æ\0\0Añ\0\0\0\0€\0¥	\0\0\0\0€=\0\0\0R\0\0\0€\0\0W\0\0€Control\0VF\0\0\'m\0\0Relación \'FK_ComprobantePago_Compra_Entrada\' entre \'Compra_Entrada\' y \'ComprobantePago\'\0\0\0(\0µ\0\0\0\0€>\0\0\01\0\0\0u\0\0\0€\0\0ControlsP\0\0¼l\0\0\0\0l\0¥	\0\0\0\0€?\0\0\0R\0\0\0€\0\0C\0\0€Controls§G\0\0÷\0\0Relación \'FK_Usuarios_TipoUsuario\' entre \'TipoUsuario\' y \'Usuarios\'\0\0\0(\0µ\0\0\0\0€@\0\0\01\0\0\0a\0\0\0€\0\0Controls\íI\0\0\Ìù\0\0\0\0d\0¥	\0\0\0\0€A\0\0\0b\0\0\0€\0\0;\0\0€Controls\áU\0\0k\Î\0\0Relación \'FK_Usuarios_Galeria\' entre \'Galeria\' y \'Usuarios\'\0\0\0(\0µ\0\0\0\0€B\0\0\01\0\0\0Y\0\0\0€\0\0Control\0ÁW\0\0N\Ñ\0\0\0\0p\0¥	\0\0\0\0€C\0\0\0R\0\0\0€\0\0G\0\0€Control\0C\0\0\Â\0\0Relación \'FK_DetalleEventos_Eventos\' entre \'Eventos\' y \'DetalleEventos\'V\0\0(\0µ\0\0\0\0€D\0\0\01\0\0\0e\0\0\0€\0\0Control\03\0\0e\Ç\0\0\0\0Œ\0¥	\0\0\0\0€E\0\0\0R\0\0\0€\0\0a\0\0€Controls\0\0a#\0Relación \'FK_ComiteOrganizador_TipoRepresentante\' entre \'TipoRepresentante\' y \'ComiteOrganizador\'\0\0\0\0\0(\0µ\0\0\0\0€F\0\0\01\0\0\0\0\0\0€\0\0ControlsC\0\0§%\0\0\0„\0¥	\0\0\0\0€G\0\0\0R\0\0\0€\0\0[\0\0€Controls\ã?\0\0Y\0Relación \'FK_ComiteOrganizador_Representantes\' entre \'Representantes\' y \'ComiteOrganizador\'\0\0\0(\0µ\0\0\0\0€H\0\0\01\0\0\0y\0\0\0€\0\0Control\0»@\0\0\î\0\0\0„\0¥	\0\0\0\0€I\0\0\0R\0\0\0€\0\0Y\0\0€Control\0E¯\0\0u\Ä\0\0Relación \'FK_Institucional_TipoInstitucional\' entre \'TipoInstitucional\' y \'Institucional\'r\'\0\0\0(\0µ\0\0\0\0€J\0\0\01\0\0\0w\0\0\0€\0\0Controlsm®\0\0\n\Ä\0\0\0\0ˆ\0¥	\0\0\0\0€K\0\0\0R\0\0\0€\0\0]\0\0€Control\03\0\0\Ëõ\0\0Relación \'FK_MenuPrincipal_PreguntasFrecuentes\' entre \'PreguntasFrecuentes\' y \'MenuPrincipal\'\0\0\0\0(\0µ\0\0\0\0€L\0\0\01\0\0\0{\0\0\0€\0\0Control\0¦‰\0\0Uû\0\0\0\0p\0¥	\0\0\0\0€M\0\0\0r\0\0\0€\0\0G\0\0€Controls$%\0\0}š\0\0Relación \'FK_Eventos_HorarioEventos\' entre \'HorarioEventos\' y \'Eventos\'V\0\0(\0µ\0\0\0\0€N\0\0\01\0\0\0e\0\0\0€\0\0Control\0\ê7\0\0§™\0\0\0\0p\0¥	\0\0\0\0€O\0\0\0b\0\0\0€\0\0E\0\0€Control\0j\çÿÿ«\0Relación \'FK_DeporteDestacado_Pais\' entre \'Pais\' y \'DeporteDestacado\'\0\0\0\0\0(\0µ\0\0\0\0€P\0\0\01\0\0\0c\0\0\0€\0\0Control\0\ã\ïÿÿx	\0\0\0p\0¥	\0\0\0\0€Q\0\0\0b\0\0\0€\0\0E\0\0€Control\04†\0\0}\Ë\0\0Relación \'FK_MenuPrincipal_Galeria\' entre \'Galeria\' y \'MenuPrincipal\'s\'V\0\0(\0µ\0\0\0\0€R\0\0\01\0\0\0c\0\0\0€\0\0Control\0Ú\0\0š\Ï\0\0\0\0l\0¥	\0\0\0\0€S\0\0\0R\0\0\0€\0\0C\0\0€Controlsğ$\0\0\ã\ì\0\0Relación \'FK_Deportistas_Usuarios\' entre \'Usuarios\' y \'Deportistas\'t\0\0(\0µ\0\0\0\0€T\0\0\01\0\0\0a\0\0\0€\0\0Control\0i(\0\0x\ì\0\0\0\0d\0¥	\0\0\0\0€U\0\0\0R\0\0\0€\0\0;\0\0€Control\0ı\0\0kú\0\0Relación \'FK_Deportistas_Pais\' entre \'Pais\' y \'Deportistas\'\0\0\0(\0µ\0\0\0\0€V\0\0\01\0\0\0Y\0\0\0€\0\0ControlsC\0\0y\0\0\0l\0¥	\0\0\0\0€W\0\0\0b\0\0\0€\0\0C\0\0€Control\0’¿ÿÿ«»\0\0Relación \'FK_Deportistas_Deportes\' entre \'Deportes\' y \'Deportistas\'o\0\0(\0µ\0\0\0\0€X\0\0\01\0\0\0a\0\0\0€\0\0Control\0\äşÿÿ@»\0\0\0\0t\0¥	\0\0\0\0€Y\0\0\0b\0\0\0€\0\0I\0\0€Control\05¸ÿÿP—\0\0Relación \'FK_Deportes_DetalleDeporte\' entre \'DetalleDeporte\' y \'Deportes\'tos\0\0(\0µ\0\0\0\0€Z\0\0\01\0\0\0g\0\0\0€\0\0Controls­¼ÿÿc¢\0\0\0\0|\0¥	\0\0\0\0€\\\0\0\0R\0\0\0€\0\0Q\0\0€Control\0u­\0\0\İ\0\0Relación \'FK_MenuPrincipal_Auspiciadores\' entre \'Auspiciadores\' y \'MenuPrincipal\'ePa\0\0(\0µ\0\0\0\0€]\0\0\01\0\0\0o\0\0\0€\0\0Controls~«\0\0¦\Ü\0\0\0\0|\0¥	\0\0\0\0€^\0\0\0R\0\0\0€\0\0Q\0\0€Controlsœ\0\0\ã\Ï\0\0Relación \'FK_MenuPrincipal_Institucional\' entre \'Institucional\' y \'MenuPrincipal\'ePa\0\0(\0µ\0\0\0\0€_\0\0\01\0\0\0o\0\0\0€\0\0ControlsÀ\0\0S\Õ\0\0\0\0t\0¥	\0\0\0\0€`\0\0\0R\0\0\0€\0\0I\0\0€Control\0”\0\0£i\0\0Relación \'FK_Compra_Entrada_Asientos\' entre \'Asientos\' y \'Compra_Entrada\'\0\0\0\0\0(\0µ\0\0\0\0€a\0\0\01\0\0\0g\0\0\0€\0\0Controls\0\08i\0\0\0\0„\0¥	\0\0\0\0€b\0\0\0b\0\0\0€\0\0Y\0\0€Controlsc1\0\0\Ëõ\0\0Relación \'FK_MenuPrincipal_ComiteOrganizador\' entre \'ComiteOrganizador\' y \'MenuPrincipal\'\0\0\0\0\0(\0µ\0\0\0\0€c\0\0\01\0\0\0w\0\0\0€\0\0Control\0œ‰\0\0§\0\0\0l\0¥	\0\0\0\0€d\0\0\0b\0\0\0€\0\0A\0\0€Control\0’¿ÿÿ]¯\0\0Relación \'FK_Deportes_Reglamento\' entre \'Reglamento\' y \'Deportes\'\0\0\0\0\0(\0µ\0\0\0\0€e\0\0\01\0\0\0_\0\0\0€\0\0Control\0E¿ÿÿò®\0\0\0\0t\0¥	\0\0\0\0€f\0\0\0R\0\0\0€\0\0I\0\0€Control\0İ¨ÿÿ\Ãl\0\0Relación \'FK_ReporteEntrada_Deportes\' entre \'Deportes\' y \'ReporteEntrada\'\0\0\0\0\0(\0µ\0\0\0\0€g\0\0\01\0\0\0g\0\0\0€\0\0Control\0#«ÿÿ\0\0\0\0t\0¥	\0\0\0\0€h\0\0\0R\0\0\0€\0\0K\0\0€Controls°‚\0\0\ä\0\0Relación \'FK_MenuPrincipal_Ceremonias\' entre \'Ceremonias\' y \'MenuPrincipal\'\0\0\0(\0µ\0\0\0\0€i\0\0\01\0\0\0i\0\0\0€\0\0Control\0”ƒ\0\0_\æ\0\0\0\0l\0¥	\0\0\0\0€j\0\0\0j\0\0\0€\0\0C\0\0€Control\0S#\0\0\Ïw\0\0Relación \'FK_Compra_Entrada_Sedes\' entre \'Sedes\' y \'Compra_Entrada\'l\0\0(\0µ\0\0\0\0€k\0\0\01\0\0\0a\0\0\0€\0\0Control\0\Ã)\0\0\é„\0\0\0\0`\0¥	\0\0\0\0€l\0\0\0R\0\0\0€\0\05\0\0€Control\0·\n\0\0Á¢\0\0Relación \'FK_Eventos_Sedes\' entre \'Sedes\' y \'Eventos\'\0\0\0\0\0(\0µ\0\0\0\0€m\0\0\01\0\0\0S\0\0\0€\0\0Controlsû\0\0Œª\0\0\0\0d\0¥	\0\0\0\0€t\0\0\0R\0\0\0€\0\0;\0\0€Controls\êÁÿÿ5\×\0\0Relación \'FK_Ranking_Medallas\' entre \'Medallas\' y \'Ranking\'\0\0\0(\0µ\0\0\0\0€u\0\0\01\0\0\0Y\0\0\0€\0\0Control\0~\Çÿÿ\Ê\Ö\0\0\0\0t\0¥	\0\0\0\0€v\0\0\0R\0\0\0€\0\0K\0\0€Control\0û\ÕÿÿO\ä\0\0Relación \'FK_DeporteDestacado_Ranking\' entre \'Ranking\' y \'DeporteDestacado\'\0\0\0(\0µ\0\0\0\0€w\0\0\01\0\0\0i\0\0\0€\0\0Control\0\ï\Æÿÿò\ï\0\0\0\0h\0¥	\0\0\0\0€x\0\0\0b\0\0\0€\0\0?\0\0€Control\0’¿ÿÿ‡ƒ\0\0Relación \'FK_TipoSedes_Deportes\' entre \'Deportes\' y \'TipoSedes\'\0\0\0(\0µ\0\0\0\0€y\0\0\01\0\0\0]\0\0\0€\0\0Controls\áûÿÿ²\0\0\0\0h\0¥	\0\0\0\0€z\0\0\0‚\0\0\0€\0\0=\0\0€Control\0÷\0\0^•\0\0Relación \'FK_Moneda_TipoMoneda\' entre \'TipoMoneda\' y \'Moneda\'s\'\0\0\0(\0µ\0\0\0\0€{\0\0\01\0\0\0[\0\0\0€\0\0Control\0…•\0\0xœ\0\0\0\0t\0¥	\0\0\0\0€|\0\0\0b\0\0\0€\0\0I\0\0€Control\0qP\0\0¶€\0\0Relación \'FK_Compra_Entrada_Usuarios\' entre \'Usuarios\' y \'Compra_Entrada\'\0\0\0\0\0(\0µ\0\0\0\0€}\0\0\01\0\0\0g\0\0\0€\0\0Control\0Ÿ_\0\05°\0\0\0\0€\0¥	\0\0\0\0€~\0\0\0b\0\0\0€\0\0U\0\0€Control\0wh\0\0¶€\0\0Relación \'FK_Compra_Entrada_HorarioEventos\' entre \'HorarioEventos\' y \'Compra_Entrada\'\0\0\0\0\0(\0µ\0\0\0\0€\0\0\01\0\0\0s\0\0\0€\0\0Controls	o\0\0?‡\0\0\0\0p\0¥	\0\0\0\0€€\0\0\0R\0\0\0€\0\0E\0\0€Controls\0\0¶€\0\0Relación \'FK_Compra_Entrada_Moneda\' entre \'Moneda\' y \'Compra_Entrada\'\0#V\0\0(\0µ\0\0\0\0€\0\0\01\0\0\0c\0\0\0€\0\0Control\0Ó\0\0~†\0\0\0\0€\0¥	\0\0\0\0€‚\0\0\0R\0\0\0€\0\0U\0\0€ControlswÁÿÿ1c\0\0Relación \'FK_Compra_Entrada_ReporteEntrada\' entre \'ReporteEntrada\' y \'Compra_Entrada\'o\'\0\0\0(\0µ\0\0\0\0€ƒ\0\0\01\0\0\0s\0\0\0€\0\0Control\0 \0\0\Æb\0\0\0\0d\0¥	\0\0\0\0€„\0\0\0Z\0\0\0€\0\0;\0\0€Control\0’¿ÿÿ/¿\0\0Relación \'FK_Ranking_Deportes\' entre \'Deportes\' y \'Ranking\'a\0\0(\0µ\0\0\0\0€…\0\0\01\0\0\0Y\0\0\0€\0\0Controls‹\ÏÿÿuÁ\0\0\0\0l\0¥	\0\0\0\0€†\0\0\0b\0\0\0€\0\0A\0\0€Control\0ñÿÿ\Ã\İ\0\0Relación \'FK_Ranking_Deportistas\' entre \'Deportistas\' y \'Ranking\'s\'o\0\0(\0µ\0\0\0\0€‡\0\0\01\0\0\0_\0\0\0€\0\0Control\0Šüÿÿ\ë\0\0\0\0x\0¥	\0\0\0\0€ˆ\0\0\0R\0\0\0€\0\0O\0\0€Controlsó\0\0¿\Ù\0\0Relación \'FK_DetalleEventos_Deportistas\' entre \'Deportistas\' y \'DetalleEventos\'\0\0\0(\0µ\0\0\0\0€‰\0\0\01\0\0\0m\0\0\0€\0\0Control\09\0\0·\à\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0!C4\0\0\0\0\0\Ö\0\0xV4\0\0\0\0\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0P\0r\0o\0g\0r\0a\0m\0 \0F\0i\0l\0e\0s\0 \0(\0x\08\06\0)\0/\0M\0i\0c\0r\0o\0s\0o\0f\0t\0 \0S\0Q\0L\0 \0S\0e\0r\0v\0e\0r\0/\01\02\00\0/\0T\0o\0o\0l\0s\0/\0B\0i\0n\0n\0/\0M\0a\0n\0a\0g\0e\0m\0e\0n\0t\0S\0t\0u\0d\0i\0o\0/\0I\0D\0E\0/\0P\0r\0i\0v\0a\0t\0e\0A\0s\0s\0e\0m\0b\0l\0i\0e\0s\0/\0e\0s\0/\0M\0i\0c\0r\0o\0s\0o\0f\0t\0.\0S\0q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0\Ğ\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ö\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0§\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0	\0\0\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0!C4\0\0\0I\0\0\0\0xV4\0\0\0\0\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0P\æ7\\\æ7\\\æ7h\æ7h\æ7t\æ7t\æ7€\æ7€\æ7\Ô\ç7\Ô\ç7\à\ç7\à\ç7\ì\ç7\ì\ç7ø\ç7ø\ç7\è7\è7\\\è7\\\è7h\è7h\è7t\è7t\è7€\è7€\è7Œ\è7Œ\è7˜\è7˜\è7\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\09yñ\0\0€M\0i\0c\0r\0o\0s\0o\0f\0t\0.\0S\0q\0l\0S\0e\0r\0v\0e\0r\0.\0E\0x\0p\0r\0e\0s\0s\0.\0O\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0I\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0!C4\0\0\0~\0\0µ\0\0xV4\0\0\0\0\0C\0a\0t\0e\0g\0o\0r\0i\0a\0A\0s\0i\0e\0n\0t\0o\0\0\01\03\01\00\00\00\04\00\00\00\00\00\01\00\00\00\01\00\00\02\07\02\07\03\06\0a\0d\06\0e\05\0f\09\05\08\06\0b\0a\0c\02\0d\05\03\01\0e\0a\0b\0c\03\0a\0c\0c\06\06\06\0c\02\0f\08\0e\0c\08\07\09\0f\0a\09\04\0f\08\0f\07\0b\00\03\02\07\0d\02\0f\0f\02\0e\0d\05\02\03\04\04\08\0iyÁ3\0€”	t\0\0\0\0\Ğ#s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\0µ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0j\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0C\0a\0t\0e\0g\0o\0r\0i\0a\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0µ\0\0ŞŠ\0\0µ\0\0N‰\0\0Ú¬\0\0N‰\0\0Ú¬\0\0€\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0®\0\0L‡\0\0—\0\0S\0\02\0\0\0\0\0\0\0—\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0C\0a\0t\0e\0g\0o\0r\0i\0a\0A\0s\0i\0e\0n\0t\0o\0!C4\0\0\0\0\0\Ø\0\0xV4\0\0\0\0\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0o\0n\0s\0_\0S\0c\0r\0i\0p\0t\0X\0m\0l\0I\0n\0d\0e\0x\0e\0s\0_\01\03\01\02\05\02\0,\0 \0P\0u\0b\0l\0i\0c\0K\0e\0y\0=\00\00\02\04\00\00\00\00\00\04\08\00\00\00\00\00\09\04\00\00\00\00\00\00\00\06\00\02\00\00\00\00\00\00\02\04\00\00\00\00\05\02\05\03\04\01\03\01\00\00\00\04\00\00\00\00\00\01\00\00\00\01\00\00\02\07\02\07\03\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ø\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\00\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0^\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0!C4\0\0\0\0\0Q\0\0xV4\0\0\0\0\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0\0\0H¼\ÈrT¼\ÈrT¼\Èr`¼\Èr`¼\Èrl¼\Èrl¼\Èrx¼\Èrx¼\Èr„¼\Èr„¼\Èr¼\Èr¼\Èrœ¼\Èrœ¼\Èr¨¼\Èr¨¼\Èr´¼\Èr´¼\ÈrÀ¼\ÈrÀ¼\ÈrĞ¼\ÈrĞ¼\Èr\à¼\Èr\à¼\Èr\ì¼\Èr\ì¼\Èr\0½\Èr\0½\Èr½\Èr½\Èr ½\Èr ½\Èr,½\Èr,½\Èr8½\Èr8½\ÈrL½\ÈrL½\ÈrX½\ÈrX½\Èrd½\Èrd½\Èrp½\Èrp½\Èr|½\Èr|½\Èrˆ½\Èrˆ½\Èr”½\Èr”½\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0\Z\0\0\0\0\0\0-\0\0	\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0l\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0\0\0!C4\0\0\0\0\0-\"\0\0xV4\0\0\0\0\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0\0\0‰`5	\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Fˆ|r\Èr¬ş\Ér ~½r\Ér\à\îsD\0\0\0\0\0\0D\0\0ƒ\0\0\Ú\0\0\0\0\0\0\Ú\0\0ƒ\0\0p\0\0\0\0\0\0p\0\0ƒ\0\0\0\0\0\0–\0\0\0:\0\0–\0\0\0\0\0\0\0,\0\0:\0\0,\0\0\0\0\0\0\Â\0\0:\0\0\Â\0\0\0\0\0\0X\0\0:\0\0X\0\0\0\0\0\0\î\0\0:\0\0\î\0\0\0\0\0\0„\0\0:\0\0„\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0G\0\0\0\0\0\0-\0\0\n\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0-\"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0\0\0!C4\0\0\0\0\0U\0\0xV4\0\0\0\0\0C\0o\0m\0p\0r\0o\0b\0a\0n\0t\0e\0P\0a\0g\0o\0\0\03\0d\05\0c\05\0d\0d\02\0d\0f\0c\07\0b\0c\09\09\0c\05\02\08\06\0b\02\0c\01\02\05\01\01\07\0b\0f\05\0c\0b\0e\02\04\02\0b\09\0d\04\01\07\05\00\07\03\02\0b\02\0b\0d\0f\0f\0e\06\04\09\0c\06\0e\0f\0b\08\0e\05\05\02\06\0d\05\02\06\0f\0d\0d\01\03\00\00\09\05\0e\0c\0d\0b\07\0b\0f\02\01\00\08\00\09\0c\06\0c\0d\0a\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0U\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0h\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0C\0o\0m\0p\0r\0o\0b\0a\0n\0t\0e\0P\0a\0g\0o\0\0\0!C4\0\0\0\0\0\Ø\0\0xV4\0\0\0\0\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0\0\0d\03\0b\02\08\0f\01\0f\06\0e\04\0c\08\0\0\0c\08\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0šzR\r\0\0€”	t\0\0\0\0°\è7\0\0\0\0\0\0\0t€½rt€½r|€½r|€½rœ€½rœ€½r°€½r°€½rŒ\æ7Œ\æ7”\æ7”\æ7¤\æ7¤\æ7´\æ7´\æ7\Ä\æ7\Ä\æ7\Ô\æ7\Ô\æ7\ä\æ7\ä\æ7ô\æ7ô\æ7\ç7\ç7\ç7\ç7$\ç7$\ç74\ç74\ç\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ø\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0j\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0\0\0!C4\0\0\0\0\08\0\0xV4\0\0\0\0\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0d\05\02\03\04\04\08\0f\08\03\0c\03\0d\05\0c\05\0d\0d\02\0d\0f\0c\07\0b\0c\09\09\0c\05\02\08\06\0b\02\0c\01\02\05\01\01\07\0b\0f\05\0c\0b\0e\02\04\02\0b\09\0d\04\01\07\05\00\07\03\02\0b\02\0b\0d\0f\0f\0e\06\04\09\0c\06\0e\0f\0b\08\0e\05\05\02\06\0d\05\02\06\0f\0d\0d\01\03\00\00\09\05\0e\0c\0d\0b\07\0b\0f\02\01\00\08\00\09\0c\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\08\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0	\0\0\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0!C4\0\0\0\0\0\à\0\0xV4\0\0\0\0\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0L\ä7L\ä7X\ä7X\ä7d\ä7d\ä7p\ä7p\ä7|\ä7òzªˆ\0€ˆ\ä7”\ä7”\ä7 \ä7 \ä7¬\ä7¬\ä7¸\ä7¸\ä7\Ä\ä7\Ä\ä7\Ğ\ä7\Ğ\ä7\Ü\ä7\Ü\ä7\è\ä7\è\ä7ô\ä7ô\ä7\0\å7\0\å7\å7\å7\å7\å7$\å7$\å70\å70\å7<\å7<\å7H\å7H\å7T\å7T\å7`\å7`\å7l\å7l\å7x\å7x\å7„\å7„\å\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\à\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0`\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0!C4\0\0\0~\0\0\Ñ\0\0xV4\0\0\0\0\0D\0e\0t\0a\0l\0l\0e\0D\0e\0p\0o\0r\0t\0e\0\0\0†ğº†\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0 ~½r\Ér\à\îs ~½r\Ér\à\îsD\0\0\0\0\0\0D\0\0ƒ\0\0\Ú\0\0\0\0\0\0\Ú\0\0ƒ\0\0p\0\0\0\0\0\0p\0\0ƒ\0\0\0\0\0\0–\0\0\0:\0\0–\0\0\0\0\0\0\0,\0\0:\0\0,\0\0\0\0\0\0\Â\0\0:\0\0\Â\0\0\0\0\0\0X\0\0:\0\0X\0\0\0\0\0\0\î\0\0:\0\0\î\0\0\0\0\0\0„\0\0:\0\0„\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\0\Ñ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0D\0e\0t\0a\0l\0l\0e\0D\0e\0p\0o\0r\0t\0e\0\0\0!C4\0\0\0}\0\0(\0\0xV4\0\0\0\0\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0}\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0\0\0!C4\0\0\0‰\0\0\×	\0\0xV4\0\0\0\0\0E\0s\0t\0a\0d\0o\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Œ\æ7Œ\æ7”\æ7”\æ7¤\æ7¤\æ7´\æ7´\æ7\Ä\æ7\Ä\æ7\Ô\æ7\Ô\æ7\ä\æ7\ä\æ7ô\æ7ô\æ7\ç7\ç7\ç7\ç7$\ç7$\ç74\ç74\ç7D\ç7D\ç7T\ç7T\ç7d\ç7d\ç7t\ç7t\ç7„\ç7„\ç7”\ç7”\ç7¤\ç7¤\ç7´\ç7´\ç7\Ä\ç7\Ä\ç7 \è7 \è\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0‰\0\0\×	\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0„	\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0E\0s\0t\0a\0d\0o\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0òÁ\0\0:k\0\0~´\0\0:k\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\05´\0\08i\0\0\0\0S\0\05\0\0\0\0\0\0\0\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0E\0s\0t\0a\0d\0o\0A\0s\0i\0e\0n\0t\0o\0!C4\0\0\0ğ\0\0\Ø\0\0xV4\0\0\0\0\0E\0v\0e\0n\0t\0o\0s\0\0\0¸\ä7¸\ä7\Ä\ä7\Ä\ä7\Ğ\ä7\Ğ\ä7\Ü\ä7\Ü\ä7\è\ä7\è\ä7ô\ä7ô\ä7\0\å7\0\å7\å7\å7\å7\å7$\å7$\å70\å70\å7<\å7<\å7H\å7H\å7T\å7T\å7`\å7`\å7l\å7l\å7x\å7x\å7„\å7„\å7\å7\å7œ\å7?x÷¨\0€¨\å7´\å7´\å7À\å7À\å7\Ì\å7\Ì\å7\Ø\å7\Ø\å7\ä\å7\ä\å7ğ\å7ğ\å7ü\å7ü\å\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0ğ\0\0\Ø\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0˜\r\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0E\0v\0e\0n\0t\0o\0s\0\0\0!C4\0\0\0\0\0C\0\0xV4\0\0\0\0\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0C\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\00\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0`\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0\0\0!C4\0\0\0\0\0\0\0xV4\0\0\0\0\0G\0a\0l\0e\0r\0i\0a\0\0\0œ¼\Èrœ¼\Èr¨¼\Èr¨¼\Èr´¼\Èr´¼\ÈrÀ¼\ÈrÀ¼\ÈrĞ¼\ÈrĞ¼\Èr\à¼\Èr\à¼\Èr\ì¼\Èr\ì¼\Èr\0½\Èr\0½\Èr½\Èr½\Èr ½\Èr ½\Èr,½\Èr,½\Èr8½\Èr8½\ÈrL½\ÈrL½\ÈrX½\ÈrX½\Èrd½\Èrd½\Èrp½\Èrp½\Èr|½\Èr|½\Èrˆ½\Èrˆ½\Èr”½\Èr”½\Èr ½\Èr ½\Èr¬½\Èr¬½\Èr¸½\Èr¸½\ÈrÄ½\ÈrÄ½\ÈrĞ½\ÈrĞ½\ÈrÜ½\ÈrÜ½\Èr\è½\Èr\è½\Èrô½\Èrô½\Èr\0¾\Èr\0¾\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0G\0a\0l\0e\0r\0i\0a\0\0\0!C4\0\0\0\0\0w\0\0xV4\0\0\0\0\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0,z„\r\0\0€\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0w\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\00\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0‰N\0\0«\0\0œc\0\0«\0\0œc\0\0]¤\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\íP\0\0©\0\0\Ã\0\0S\0\02\0\0\0\0\0\0\0\Ã\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0_\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0!C4\0\0\0\0\0,\0\0xV4\0\0\0\0\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0Ô¾\Èr\à¾\Èr\à¾\Èr\ì¾\Èr\ì¾\Èr\0¿\Èr\0¿\Èr¿\Èr¿\Èr¿\Èr¿\Èr$¿\Èr$¿\Èr8¿\Èr8¿\ÈrD¿\ÈrD¿\ÈrP¿\ÈrP¿\Èr\\¿\Èr\\¿\Èrh¿\Èrh¿\Èrt¿\Èrt¿\Èr€¿\Èr€¿\ÈrŒ¿\ÈrŒ¿\Èr¤¿\Èr¤¿\Èr°¿\Èr°¿\Èr¼¿\Èr¼¿\ÈrÈ¿\ÈrÈ¿\ÈrÔ¿\ÈrÔ¿\Èr\à¿\Èr\à¿\Èr\ì¿\Èr\ì¿\Èrø¿\Èrø¿\ÈrÀ\ÈrÀ\ÈrÀ\ÈrÀ\ÈrÀ\ÈrÀ\Èr(À\Èr(À\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0,\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0!C4\0\0\0\0\0‰\0\0xV4\0\0\0\0\0M\0e\0d\0a\0l\0l\0a\0s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0‰\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\00\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0	\0\0\0M\0e\0d\0a\0l\0l\0a\0s\0\0\0!C4\0\0\0\0\0$\0\0xV4\0\0\0\0\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0\0\0l\0S\0e\0r\0v\0e\0r\0.\0E\0x\0p\0r\0e\0s\0s\0.\0S\0q\0l\0M\0a\0n\0a\0g\0e\0r\0U\0I\0,\0 \0P\0u\0b\0l\0i\0c\0K\0e\0y\0=\00\00\02\04\00\00\00\00\00\04\08\00\00\00\00\00\09\04\00\00\00\00\00\00\00\06\00\02\00\00\00\00\00\00\02\04\00\00\00\00\05\02\05\03\04\01\03\01\00\00\00\04\00\00\00\00\00\01\00\00\00\01\00\00\02\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0\Z\0\0\0\0\0\0-\0\0	\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0$\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0\0\0!C4\0\0\0t\0\0;\r\0\0xV4\0\0\0\0\0M\0o\0n\0e\0d\0a\0\0\0™\ÔÓ™\àÓ™ Ô™,Ô™8Ô™¨Ô™´Ô™ôÔ™\ÄÕ™\ĞÕ™œÖ™¨Ö™\èÖ™×™0×™ ×™¬×™0Ø™<Ø™|Ø™ˆØ™”Ø™Ù™Ù™PÙ™ Ú™,Ú™¬Ú™¸Ú™øÚ™Û™ Û™Û™œÛ™\ÜÛ™¬Ü™¸Ü™XFš„FšFšğİ™ôŞ™´\à™\ĞFšOš$OšğFšüFš(\á™lGšxGš¸Gš\ä™P\ä™\å™¼\å\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0t\0\0;\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0V\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0M\0o\0n\0e\0d\0a\0\0\0!C4\0\0\0~\0\0B\0\0xV4\0\0\0\0\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0\0\0`<\Z0=\Z<=\Z ¢¤£d¥\ÈF\Z\ÔF\ZG\Z\äG\ZğG\ZØ¥Ğ§Œ¨<©H©¨©dª« «t«0¬\à¬\ì¬p­|­È­p®(¯˜¯¤¯\ä¯´°À°\ì²ø²D³P³l³Ü³\è³L´X´˜´¤´Ì´<µHµhµ\èµ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\0B\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0p\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0\0\0!C4\0\0\0I\0\0¬\0\0xV4\0\0\0\0\0R\0a\0n\0k\0i\0n\0g\0\0\0,@\Zx\Ùp\Û,\Ü\Ü\Ü\è\ÜH\İ\Ş´\ŞÀ\Ş\ß\Ğ\ß€\àŒ\à\á\áh\á\â\È\â8\ãD\ã„\ãT\ä`\äŒ\æ˜\æ\ä\æğ\æ\ç|\çˆ\ç\ì\çø\ç8\èD\èl\è\Ü\è\è\è\éˆ\éÀ\é\Ì\é\Ì\í\Ø\í$\î`\î|\î\ì\îø\îğğPğ˜ğğğ`ñlñ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0I\0\0¬\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0R\0a\0n\0k\0i\0n\0g\0\0\0!C4\0\0\0\0\0­\0\0xV4\0\0\0\0\0R\0e\0g\0l\0a\0m\0e\0n\0t\0o\0\0\0š@Jš€Jš$š0š š¬š\ìšøšštš€šÀššœšXšdš¤šÀš\ìš\\šhš\ìšøš8šDšPšÀš\Ìšš\Üš\èšXšdš¤š°š\Ìš<\ZšH\Zšˆ\ZšXšdšœJš\ÈJš8Kšœš š`šDKš\ÈKš\ÔKšLš Lš\Ôš,L\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0­\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0^\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0R\0e\0g\0l\0a\0m\0e\0n\0t\0o\0\0\0!C4\0\0\0³\0\0¤\r\0\0xV4\0\0\0\0\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0\0\0–L8–9–|9–ˆ9–\ä˜\0˜DD–<>™PD–\ÔD–\àD–E–E–HE–dE–0˜”E– E–4F–|F–¬F–G–(G–PM–H˜\\M–\ÌM–\ØM–ôM–˜0N–HN–¸N–œ˜\ÄN–4O–@O–\\O–˜ŒO–¤O–\ĞP–TQ–<˜X˜lQ–\ÜQ–\èQ–R–\È˜\Ô˜\0	\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0³\0\0¤\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0\0\0!C4\0\0\0\0\0(\0\0xV4\0\0\0\0\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0s\0\0\0™Ø—™ä—™0˜™L˜™x˜™è˜™ô˜™x™™„™™Ä™™Ğ™™Ü™™Lš™Xš™˜š™h›™t›™è›™ô›™@œ™Lœ™hœ™Øœ™äœ™$™ô™\0™HBš¼Bš\ÈBš8Ÿ™< ™ü¡™\èLš¸Mš\ÄMšCšŒCšp¢™˜Cš\ØCš¨DšL¥™˜¥™T¦™§™§™p§™,¨™Ü¨™è¨™<©\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0s\0\0\0!C4\0\0\0²\0\0\0\0xV4\0\0\0\0\0S\0t\0o\0c\0k\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0øV–<W–$Y–dY– Z–`Z–lZ–ğZ– [–\Ğ[–ô[–d\\–p\\–ø˜˜,˜ø>™\\˜˜_–tf–˜˜€f–ğf–üf–g–\\˜Tg–¨g–ˆj–?™”j–k–k–,k–x˜hk–¼k–n–(n–Dn–\è˜ô˜xn–n–\Ìn–\Äo–Àr–s–\\z–˜hz–\ìz–øz\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0²\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0S\0t\0o\0c\0k\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0\0\08\Ç\0\0x\0\0~´\0\0x\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0#\0\0\0\0\0\0\0Ó¶\0\0\Íx\0\0ø\r\0\0S\0\03\0\0\0\0\0\0\0ø\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0S\0t\0o\0c\0k\0A\0s\0i\0e\0n\0t\0o\0s\0!C4\0\0\0~\0\09\0\0xV4\0\0\0\0\0T\0i\0p\0o\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0 ò™¬ò™\Äö™\Ğö™÷™X÷™t÷™\ä÷™ğ÷™üø™ù™Hù™ù™\èù™Xú™dú™¤ú™øú™\äû™ğû™\0šœ\0š\è\0š$š@š°š¼š š,šlšxš„šôššLš šŒš˜š°š¼šüšš$š”š š\àš°	š¼	š”\nš \nš\à\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\09\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0l\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0!C4\0\0\0\Ö\0\0¬\0\0xV4\0\0\0\0\0T\0i\0p\0o\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0˜\\.˜h.˜P:˜l:˜\Ø:˜¤D™ô:˜x;˜„;˜ ;˜°D™\ì;˜(<˜„=˜°=˜$>˜üD™0>˜´>˜À>˜\Ü>˜8E™(?˜ˆ?˜@˜\È@˜Tˆ–`ˆ–A˜A˜lˆ–ğˆ–‰–‰–0‰–L‰–TE™\ÄE™ ‰–¬‰–Ä‰–Ü‰–B˜\ÈB˜„C˜\ÄC˜\ĞC˜\ĞE™„D˜\ÜF™lŠ–xŠ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ö\0\0¬\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0 \r\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\0\0\âh\0\0ù\0\0\âh\0\0(ğ\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\'\0\0\0\0\0\0\0‘i\0\0\Çó\0\0	\0\0S\0\04\0\0\0\0\0\0\0	\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0_\0T\0i\0p\0o\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0!C4\0\0\0‰\0\0x\0\0xV4\0\0\0\0\0T\0i\0p\0o\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0<(¬(¸(\Ä)\Ğ)*X*°* +,+l+À+¬,¸,1$1p1¬1\È182D2¨2´2ô2\033|3”4\Z\È4\Ô45 5<5¬5¸5ø5L687D788D88ğ8l9\Ü9\è9(:ø:;0?<?\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0‰\0\0x\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0„	\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0l\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0!C4\0\0\0\0\0\È\r\0\0xV4\0\0\0\0\0T\0i\0p\0o\0M\0e\0d\0a\0l\0l\0a\0\0\0ô»„¼½˜\r“˜Š’¼Š’¤\r“ø\r“´“d“p“<“H“ˆ“”“¼“,“8“d“p“L““¸“\Ä“$“\à“”‹’“œ“ğ“¬“\\“h“4“@“dOš4Pš@Pšt=š€=šÀ=š\à™¿•ø¿•\ì™\0\0P\0R\0I\0M\0A\0R\0Y\0\0\0™˜d™¤d™\äd™$ \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\È\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0`\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0M\0e\0d\0a\0l\0l\0a\0\0\0\0\0º¯ÿÿşñ\0\0º¯ÿÿ¿\è\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0+\0\0\0\0\0\0\0i°ÿÿx\ì\0\0@\r\0\0S\0\05\0\0\0\0\0\0\0@\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0e\0d\0a\0l\0l\0a\0s\0_\0T\0i\0p\0o\0M\0e\0d\0a\0l\0l\0a\0!C4\0\0\0\0\0\0\0xV4\0\0\0\0\0T\0i\0p\0o\0M\0o\0n\0e\0d\0a\0\0\0–\ÄI™\ĞI™°–¼–È–,–X–È–0N™Ô–D‘–\\‘–x‘–<N™¨‘–À‘–\\’–h’–ˆN™\ÄN™t’–ä’–ğ’–“–\àN™PO™P“–\\“–t“–ì“–ø“–\\O™ÀO™”–„”–”–¬”–\ÌO™ÀJ˜ğ”–ü”–P•–Ô•–\à•–\0K˜\ĞK˜t––ä––ğ––—–\ÜK˜°L˜P—–\\—\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0^\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0M\0o\0n\0e\0d\0a\0\0\0!C4\0\0\0~\0\0\Ï\0\0xV4\0\0\0\0\0T\0i\0p\0o\0P\0r\0e\0g\0u\0n\0t\0a\0\0\0„\Ä\Ä\0\Å\ÅL\Å\Æ(\Æ\Çx\Ç„\Ç|=\Z\ì=\Zø=\Z\Ø\ÇH\ÈT\È”\Èd\Ép\ÉL\ÊX\Ê$>\Z0>\Zp>\Z\è2X3¤\Ê\Ë \ËL\ËX\Ë˜\Ë>\Zœ>\Z¸\Ë\Ä\Ë4\Ì@\Ì€\ÌŒ\Ì˜\Ì\Í\ÍT\Í$\Î0\Îğ\Îü\ÎH\Ïd\Ï\Ï\0\Ğ\Ğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\0\Ï\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¨\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0b\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\r\0\0\0T\0i\0p\0o\0P\0r\0e\0g\0u\0n\0t\0a\0\0\0!C4\0\0\0\0\0;\r\0\0xV4\0\0\0\0\0T\0i\0p\0o\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0\0\0\Èa˜\Ôa˜Ä·–Ü·–¸–À– Á–,Á–(b˜\äb˜8Á–¨Á–´Á–\àÁ–$c˜0c˜0Â–lÂ–„Â–ôÂ–\0Ã–@Ã–|Ã–\ÄÃ–4Ä–LÄ–\ÔÆ–\àÆ–c˜Ld˜\ìÆ–\\Ç–hÇ–„Ç–Œd˜˜d˜\ÔÇ–È–È–˜È–¤È–\ìd˜@e˜É–€É–ŒÉ–¨É–,f˜8f˜\ìÉ–ø\É\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0;\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0l\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0\0\0!C4\0\0\0~\0\0\0\0xV4\0\0\0\0\0T\0i\0p\0o\0S\0e\0d\0e\0s\0\0\0\Ì\è–\è\è–\0Y™Y™,\é–8\é–´\é–\Ô\ë–\à\ë–XY™(Z™\ì\ë–\\\ì–h\ì–„\ì–4Z™”›˜\È\ì–\Ô\ì–ø\ì–ø–lù–xù–\Äù–\0ú–ú–|ú–ˆú–øú–û–Dû–€û–¼û–,ü–Dü–´ü–Àü–[™x[™\Ìü–<ı–Hı–dı–„[™Ô›˜¨ı–´ı–\Ìı–\0\0—œ˜dœ˜ ˜h™È¡˜8¢\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0~\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0\\\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\n\0\0\0T\0i\0p\0o\0S\0e\0d\0e\0s\0\0\0!C4\0\0\0\0\0g\0\0xV4\0\0\0\0\0T\0i\0p\0o\0U\0s\0u\0a\0r\0i\0o\0\0\0x/š„/š\Ä/š\Ğ/šø/šh0št0š”0š1šL1šX1šp5š|5š\È5š6š 6š6šœ6š\07š7šL7šX7šd7š\Ô7š\à7š 8št8šl9šx9š„<š<š\Ü<š\è<š=šI\Ì2\Ğ,0\Z$1\Z01\Z<4\ZH4\Z8<ø¨´\Ä«\0¾\ZI>\0À\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0g\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0`\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0T\0i\0p\0o\0U\0s\0u\0a\0r\0i\0o\0\0\0!C4\0\0\0ù\0\0\Ü&\0\0xV4\0\0\0\0\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0ÀK¸L\ÄL\ĞO\ÜO(P4PPPk\0~ZI>\0À\0P+\"\r\èQ\ÄR\ĞRSS(S˜S¤S\äS´TÀTœUVV 4\Z¼4\Z,5\ZpV\àV\ìV,WüWX\ìXøX85\Zx5\ZH6\ZT6\Z7\ZDY´YÀY\ìYøY8Z(7\Zh7\ZXZdZ\ÔZ\àZ [\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0ƒ\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0ù\0\0\Ü&\0\0\0\0\0\0	\0\0\0	\0\0\0\0\0\0\0\0\0\0\0x\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0	\0\0\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0!C4\0\0\0\0\0¶\0\0xV4\0\0\0\0\0H\0o\0r\0a\0\0\0˜0ß˜(\à˜4\à˜@\ã˜L\ã˜˜\ã˜¤\ã˜À\ã˜0\ä˜<\ä˜|\ä˜L\å˜X\å˜\æ˜(\æ˜h\æ˜t\æ˜€\æ˜ğ\æ˜ü\æ˜<\ç˜\è˜\è˜ô\è˜h\é˜t\é˜`_™ _™\\k™\È\é˜8\ê˜D\ê˜„\ê˜T\ë˜`\ë˜$\ì˜0\ì˜m™À_™\Ì_™<`™H`™|\ì˜\ì\ì˜ø\ì˜$\í˜0\í˜p\í˜ˆ`™”`™\í˜œ\í˜\î˜\î˜X\î˜d\î˜p\î\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0¶\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0R\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0H\0o\0r\0a\0\0\0\0\0\nA\0\0\\Á\0\0\nA\0\0Åº\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\04\0\0\0\0\0\0\0¹A\0\0Y½\0\0q\0\0S\0\03\0\0\0\0\0\0\0q\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0_\0H\0o\0r\0a\0!C4\0\0\0\0\0^\r\0\0xV4\0\0\0\0\0P\0a\0i\0s\0\0\0™L7™\Ğ7™\Ü7™(8™\Ğ8™\ä–T–`–|–ˆ9™ø9™:™D:™;™ ;™L=™X=™¼–ğ˜¤=™ü˜l˜\ä–ğ––8–x˜°\Z–”˜°=™\È –„!–@\"–€\"–Œ\"–ˆ#–L%–&–(&–\Ğ˜\è˜4&–¤&–°&–\Ü&–˜\Ì=™,\'–h\'–€\'–ü\'–(–H(–(–œ(–)–)\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0^\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0R\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0P\0a\0i\0s\0\0\0!C4\0\0\0\0\0’\0\0xV4\0\0\0\0\0S\0e\0d\0e\0s\0\0\0€bŒb\Ìbœc¨ct7\Z€7\Zğ7\Z\àd\äe¤gü7\Z<8\Z9\Z9\Zô9\Zhj\Ìj|kˆk\èk¤lTm`m´mpn o,o°o¼op°phq\Øq\äq$rôr\0s,u8u„uu¬uv(vŒv˜v\Øv\ävw|wˆw¨w(x`xlx\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0,\0\0\0,\0\0\0,\0\0\04\0\0\0\0\0\0\0\0\0\0\04\0\0•\0\0\0\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0l	\0\08\0\0Œ\0\0\0\0<\0\0X\0\0h\0\0X\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0’\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ì\0\0\0\0\0\0\0\0\0:\0\0ô\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0:\0\0¹\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0\0\0\0\0\0\0\0\0+?\0\0ú\"\0\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0ˆ\0\0¤\r\0\0X\0\0xV4\0\0\0T\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0S\0e\0d\0e\0s\0\0\0\0\0\0\0şŠ\0\0\0\0\æ‘\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\08\0\0\0\0\0\0\0A\0\0È\0\0\0\0S\0\02\0\0\0\0\0\0\0\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0S\0e\0d\0e\0s\0_\0T\0i\0p\0o\0S\0e\0d\0e\0s\0\0\0\ä¢\0\0@\0\ä¢\0\0º\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0:\0\0\0\0\0\0\0“£\0\0\Ó\0/\0\0S\0\02\0\0\0\0\0\0\0/\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma#\0F\0K\0_\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0_\0T\0i\0p\0o\0P\0r\0e\0g\0u\0n\0t\0a\0\0\0\Æ\0\0‚õ\0\0\Æ\0\0T\î\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0<\0\0\0\0\0\0\0»\Æ\0\0Añ\0\0\0\0S\0\02\0\0\0\0\0\0\0\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\"\0F\0K\0_\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0_\0T\0i\0p\0o\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\00u\0\0¾n\0\0‚G\0\0¾n\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0>\0\0\0\0\0\0\0P\0\0¼l\0\0£\0\0S\0\0B\0\0\0\0\0\0\0£\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma!\0F\0K\0_\0C\0o\0m\0p\0r\0o\0b\0a\0n\0t\0e\0P\0a\0g\0o\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0\0\0>I\0\0Lş\0\0>I\0\0\Ìù\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0@\0\0\0\0\0\0\0\íI\0\0\Ìù\0\0\r\0\0S\0\0d\0\0\0\0\0\0\0\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0U\0s\0u\0a\0r\0i\0o\0s\0_\0T\0i\0p\0o\0U\0s\0u\0a\0r\0i\0o\0\0\0\Ğk\0\0\Ğ\0\0ûb\0\0\Ğ\0\0ûb\0\0†\Ó\0\0\rW\0\0†\Ó\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0B\0\0\0\0\0\0\0ÁW\0\0N\Ñ\0\0‹\n\0\0S\0\02\0\0\0\0\0\0\0‹\n\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0U\0s\0u\0a\0r\0i\0o\0s\0_\0G\0a\0l\0e\0r\0i\0a\0\0\0\Ú\0\0\Ì\Ä\0\0\Ú\0\0R\Ë\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0D\0\0\0\0\0\0\03\0\0e\Ç\0\0ø\r\0\0S\0\02\0\0\0\0\0\0\0ø\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0_\0E\0v\0e\0n\0t\0o\0s\0\0\0B\0\0ø$\0€%\0\0ø$\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0F\0\0\0\0\0\0\0C\0\0§%\0+\0\0S\0\0	\0\0\0\0\0\0\0+\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma&\0F\0K\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0_\0T\0i\0p\0o\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0\0\0\ÜP\0\0ğ\0A\0\0ğ\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0H\0\0\0\0\0\0\0»@\0\0\î\0u\0\0S\0\0]\0\0\0\0\0\0\0u\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma#\0F\0K\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0_\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0s\0\0\0¾¹\0\0\Æ\0\0q°\0\0\Æ\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0J\0\0\0\0\0\0\0m®\0\0\n\Ä\0\0	\0\0S\0\0J\0\0\0\0\0\0\0	\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\"\0F\0K\0_\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0_\0T\0i\0p\0o\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0Ê\0\0xÿ\0\0Ê\0\0†ø\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0L\0\0\0\0\0\0\0¦‰\0\0Uû\0\0u\0\0S\0\02\0\0\0\0\0\0\0u\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma$\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0\0\0zX\0\0rœ\0\0¢9\0\0rœ\0\0¢9\0\0©›\0\0+\0\0©›\0\0+\0\0Š±\0\0P&\0\0Š±\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0N\0\0\0\0\0\0\0\ê7\0\0§™\0\0<\0\0S\0\0-\0\0\0\0\0\0\0<\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0E\0v\0e\0n\0t\0o\0s\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\ÔşÿÿB\04\ïÿÿB\04\ïÿÿn	\0–\èÿÿn	\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0P\0\0\0\0\0\0\0\ã\ïÿÿx	\0ø\r\0\0S\0\0E\0\0\0\0\0\0\0ø\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0_\0P\0a\0i\0s\0\0\0`‡\0\0\Í\0\0+\0\0\Í\0\0+\0\0ø\Ù\0\0“\0\0ø\Ù\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0R\0\0\0\0\0\0\0Ú\0\0š\Ï\0\0@\r\0\0S\0\0*\0\0\0\0\0\0\0@\r\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0G\0a\0l\0e\0r\0i\0a\0\0\07\0\0z\î\0\0&\0\0z\î\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0T\0\0\0\0\0\0\0i(\0\0x\ì\0\0µ\0\0S\0\0.\0\0\0\0\0\0\0µ\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0”\0\0¬\0”\0\0&ı\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0V\0\0\0\0\0\0\0C\0\0y\0]\n\0\0S\0\05\0\0\0\0\0\0\0]\n\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0P\0a\0i\0s\0\0\0¾ÀÿÿB½\0\0\0\0B½\0\0\0\0z\î\0\0Œ\n\0\0z\î\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0X\0\0\0\0\0\0\0\äşÿÿ@»\0\0\ã\0\0S\0\02\0\0\0\0\0\0\0\ã\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0ô\Ïÿÿš\0\0ô\Ïÿÿe¤\0\0°¹ÿÿe¤\0\0°¹ÿÿ^°\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Z\0\0\0\0\0\0\0­¼ÿÿc¢\0\0°\0\0S\0\0 \0\0\0\0\0\0\0°\0\0S\0\0\0\0\0\0\0\0\0€\0\0€\0\0\0\0\0\0\0°0\0Tahoma\Z\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0s\0_\0D\0e\0t\0a\0l\0l\0e\0D\0e\0p\0o\0r\0t\0e\0\0\0(¹\0\0¨\Ş\0\0¡®\0\0¨\Ş\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0]\0\0\0\0\0\0\0~«\0\0¦\Ü\0\0\Ã\0\0S\0\02\0\0\0\0\0\0\0\Ã\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\04\0\0š\Ò\0\04\0\0b\Ù\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\0\0\0\0\0\0\0À\0\0S\Õ\0\0\Å\0\0S\0\02\0\0\0\0\0\0\0\Å\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0\î˜\0\0:k\0\0À\0\0:k\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0a\0\0\0\0\0\0\0\0\08i\0\0€\0\0S\0\02\0\0\0\0\0\0\0€\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\Z\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0ú2\0\08\0ú2\0\0ø\0¨“\0\0ø\0¨“\0\0†ø\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0c\0\0\0\0\0\0\0œ‰\0\0§\0\0\0S\0\0I\0\0\0\0\0\0\0\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\"\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0\0\0T\Ùÿÿô°\0\0\Â\Éÿÿô°\0\0\Â\Éÿÿô°\0\0¾Àÿÿô°\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0e\0\0\0\0\0\0\0E¿ÿÿò®\0\0@\r\0\0S\0\02\0\0\0\0\0\0\0@\r\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0s\0_\0R\0e\0g\0l\0a\0m\0e\0n\0t\0o\0\0\0tªÿÿ^°\0\0tªÿÿ~o\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0g\0\0\0\0\0\0\0#«ÿÿ\0\0$\0\0S\0\0\0\0\0\0\0\0\0$\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\Z\0F\0K\0_\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0Üƒ\0\0°\å\0\0“\0\0°\å\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0i\0\0\0\0\0\0\0”ƒ\0\0_\æ\0\0\Å\0\0S\0\02\0\0\0\0\0\0\0\Å\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\ê$\0\0\æ‘\0\0\ê$\0\0:„\0\0\\\0\0:„\0\0\\\0\0Jy\0\00u\0\0Jy\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0k\0\0\0\0\0\0\0\Ã)\0\0\é„\0\0T\0\0S\0\0\0\0\0\0\0\0\0T\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0S\0e\0d\0e\0s\0\0\0N\0\0x¥\0\0N\0\0ô°\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0m\0\0\0\0\0\0\0û\0\0Œª\0\0¤	\0\0S\0\02\0\0\0\0\0\0\0¤	\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0E\0v\0e\0n\0t\0o\0s\0_\0S\0e\0d\0e\0s\0\0\0\Ãÿÿ\Ì\Ø\0\0ü\Öÿÿ\Ì\Ø\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0u\0\0\0\0\0\0\0~\Çÿÿ\Ê\Ö\0\0\0\0S\0\02\0\0\0\0\0\0\0\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0M\0e\0d\0a\0l\0l\0a\0s\0\0\0’\×ÿÿ\ç\0\0’\×ÿÿ2ú\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0w\0\0\0\0\0\0\0\ï\Æÿÿò\ï\0\0ô\0\0S\0\02\0\0\0\0\0\0\0ô\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0_\0R\0a\0n\0k\0i\0n\0g\0\0\0¾Àÿÿx´\0\02ûÿÿx´\0\02ûÿÿ…\0\0r\0\0…\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0y\0\0\0\0\0\0\0\áûÿÿ²\0\0†\0\0S\0\05\0\0\0\0\0\0\0†\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0T\0i\0p\0o\0S\0e\0d\0e\0s\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0¤\0\0\0\0N¢\0\0\âš\0\0N¢\0\0\âš\0\0z\0\0d\0\0z\0\0d\0\0\'š\0\0°š\0\0\'š\0\0°š\0\0˜\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\0\0\0\0\0\0\0…•\0\0xœ\0\0\ã\0\0S\0\02\0\0\0\0\0\0\0\ã\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0M\0o\0n\0e\0d\0a\0_\0T\0i\0p\0o\0M\0o\0n\0e\0d\0a\0\0\0R\0\0ğ\Ò\0\0R\0\07²\0\0¼\0\07²\0\0¼\0\0qƒ\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0}\0\0\0\0\0\0\0Ÿ_\0\05°\0\0—\0\0S\0\02\0\0\0\0\0\0\0—\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\Z\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0j\0\0\æ‘\0\0j\0\0†\0\0\Æu\0\0†\0\0\Æu\0\0qƒ\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	o\0\0?‡\0\0\í\0\0S\0\0<\0\0\0\0\0\0\0\í\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma \0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0$\0\0ŞŠ\0\0$\0\0qƒ\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Ó\0\0~†\0\0:\0\0S\0\02\0\0\0\0\0\0\0:\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0M\0o\0n\0e\0d\0a\0\0\0£\Âÿÿ\Èd\0\00u\0\0\Èd\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ƒ\0\0\0\0\0\0\0 \0\0\Æb\0\02\0\0S\0\0;\0\0\0\0\0\0\02\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma \0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0\0\0¾Àÿÿ\ÆÀ\0\0\Şÿÿ\ÆÀ\0\0\ŞÿÿZ\Ò\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0…\0\0\0\0\0\0\0‹\ÏÿÿuÁ\0\0-\0\0S\0\05\0\0\0\0\0\0\0-\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0Œ\n\0\0şñ\0\0\Ûûÿÿşñ\0\0\Ûûÿÿ>\ß\0\0Eòÿÿ>\ß\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0‡\0\0\0\0\0\0\0Šüÿÿ\ë\0\0Y\0\0S\0\0.\0\0\0\0\0\0\0Y\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0Š\0\0F\æ\0\0Š\0\0z\Ü\0\0\0\0\0\0\0\0\0ğğğ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0‰\0\0\0\0\0\0\09\0\0·\à\0\0\Å\0\0S\0\02\0\0\0\0\0\0\0\Å\0\0S\0\0\0\0\0\0\0ÿÿÿ\0\0\0€\0\0\0\0\0\0\0°0\0Tahoma\0F\0K\0_\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0şÿÿÿşÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	\0\0\0\n\0\0\0\0\0\0\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0 \0\0\0!\0\0\0\"\0\0\0#\0\0\0$\0\0\0%\0\0\0&\0\0\0\'\0\0\0(\0\0\0şÿÿÿşÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ\0şÿ\n\0\0ÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Microsoft DDS Form 2.0\0\0\0\0Embedded Object\0\0\0\0\0ô9²q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Na¼\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Û\æ°\é\Ğ­Q\0 \ÉW9\0\0\0\Ê2ú©\Õ\0\0HE\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Š\0\0D\0a\0t\0a\0 \0S\0o\0u\0r\0c\0e\0=\0L\0A\0P\0T\0O\0P\0-\0C\0E\0S\0A\0R\0;\0I\0n\0i\0t\0i\0a\0l\0 \0C\0a\0t\0a\0l\0o\0g\0=\0B\0D\0T\0e\0c\0n\0o\0S\0e\0r\0v\0;\0P\0e\0r\0s\0i\0s\0t\0 \0S\0e\0c\0u\0r\0i\0t\0y\0 \0I\0n\0f\0o\0=\0T\0r\0u\0e\0;\0U\0s\0e\0r\0 \0I\0D\0=\0s\0a\0;\0M\0u\0l\0t\0i\0p\0l\0e\0A\0c\0t\0i\0v\0e\0R\0e\0s\0u\0l\0t\0S\0e\0t\0s\0=\0F\0a\0l\0s\0e\0;\0P\0a\0c\0k\0e\0t\0 \0S\0i\0z\0\0D\0d\0s\0S\0t\0r\0e\0a\0m\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0a\0\0\0ñn\0\0\0\0\0\0S\0c\0h\0e\0m\0a\0 \0U\0D\0V\0 \0D\0e\0f\0a\0u\0l\0t\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0&\0\0ÿÿÿÿÿÿÿÿÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0D\0S\0R\0E\0F\0-\0S\0C\0H\0E\0M\0A\0-\0C\0O\0N\0T\0E\0N\0T\0S\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0,\0\0\0\0\0\0\0ÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0^	\0\0\0\0\0\0S\0c\0h\0e\0m\0a\0 \0U\0D\0V\0 \0D\0e\0f\0a\0u\0l\0t\0 \0P\0o\0s\0t\0 \0V\06\0\0\0\0\0\0\0\0\0\0\0\0\06\0\0ÿÿÿÿÿÿÿÿÿÿÿÿ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0)\0\0\0\0\0\0\0\0\0\0\0\0\0‚\0\0\0ƒ\0\0\0„\0\0\0…\0\0\0†\0\0\0‡\0\0\0ˆ\0\0\0‰\0\0\0Š\0\0\0‹\0\0\0Œ\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0‘\0\0\0’\0\0\0“\0\0\0”\0\0\0•\0\0\0–\0\0\0—\0\0\0˜\0\0\0şÿÿÿš\0\0\0›\0\0\0œ\0\0\0\0\0\0şÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ\0\0\0Nÿÿ¼M\0\0\0&\0\0\0s\0c\0h\0_\0l\0a\0b\0e\0l\0s\0_\0v\0i\0s\0i\0b\0l\0e\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0d\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0J\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0C\0a\0t\0e\0g\0o\0r\0i\0a\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0ölˆöl\0\0\0\0\0\0\0\0­\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0	\0\0\0	\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\n\0\0\0\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\r\0\0\0\r\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\04\03\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0D\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0E\0s\0t\0a\0d\0o\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0õlõl\0\0\0\0\0\0\0\0­\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\04\08\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0L\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0_\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0òlˆòl\0\0\0\0\0\0\0\0­\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\Z\0\0\0\Z\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0 \0\0\0 \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0!\0\0\0!\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0\"\0\0\0\"\0\0\0\0\0\0\0D\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0A\0s\0i\0e\0n\0t\0o\0s\0_\0S\0t\0o\0c\0k\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0#\0\0\0#\0\0\0\"\0\0\0\0\0\0\çlH\çl\0\0\0\0\0\0\0\0­\0\0\0\0\0$\0\0\0$\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0%\0\0\0%\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\03\06\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0&\0\0\0&\0\0\0\0\0\0\0J\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0_\0T\0i\0p\0o\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\'\0\0\0\'\0\0\0&\0\0\0\0\0\0\älˆ\äl\0\0\0\0\0\0\0\0­\0\0\0\0\0(\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\04\03\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0)\0\0\0)\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0*\0\0\0*\0\0\0\0\0\0\0@\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0d\0a\0l\0l\0a\0s\0_\0T\0i\0p\0o\0M\0e\0d\0a\0l\0l\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0+\0\0\0+\0\0\0*\0\0\0\0\0\0\Ùlˆ\Ùl\0\0\0\0\0\0\0\0­\0\0\0\0\0,\0\0\0,\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0-\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\04\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0.\0\0\0.\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\0/\0\0\0/\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\00\0\0\00\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\01\0\0\01\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\09\06\00\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\02\0\0\02\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\03\0\0\03\0\0\0\0\0\0\08\0\0\0\â½\0\0\0d\0b\0o\0\0\0F\0K\0_\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0_\0H\0o\0r\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\04\0\0\04\0\0\03\0\0\0\0\0\0\ŞlH\Şl\0\0\0\0\0\0\0\0­\0\0\0\0\05\0\0\05\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\06\0\0\06\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\Ğ\0\0\0(\0\0\0A\0c\0t\0i\0v\0e\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0\0\0\0\0\0\0\0\0\01\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\00\0\0\0\0\0\0\0:\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\0,\02\04\01\02\0,\05\0,\01\05\09\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\01\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\03\02\07\06\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\02\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\03\0\0\0\0\0\0\0\0\0\02\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0\0\0 \0\0\0T\0a\0b\0l\0e\0V\0i\0e\0w\0M\0o\0d\0e\0:\04\0\0\0\0\0\0\0>\0\0\04\0,\00\0,\02\08\04\0,\00\0,\02\09\05\02\0,\01\02\0,\03\04\09\02\0,\01\01\0,\02\01\03\06\0\0\07\0\0\07\0\0\0\0\0\0\06\0\0\0\0\0\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0S\0e\0d\0e\0s\0_\0T\0i\0p\0o\0S\0e\0d\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\08\0\0\08\0\0\07\0\0\0\0\0\0\rmH\rm\0\0\0\0\0\0\0\0­\0\0\0\0\09\0\0\09\0\0\0\0\0\0\0X\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0_\0T\0i\0p\0o\0P\0r\0e\0g\0u\0n\0t\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0:\0\0\0:\0\0\09\0\0\0\0\0\0\rm\rm\0\0\0\0\0\0\0\0­\0\0\0\0\0;\0\0\0;\0\0\0\0\0\0\0V\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0_\0T\0i\0p\0o\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0<\0\0\0<\0\0\0;\0\0\0\0\0\0m\Èm\0\0\0\0\0\0\0\0­\0\0\0\0\0=\0\0\0=\0\0\0\0\0\0\0T\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0o\0b\0a\0n\0t\0e\0P\0a\0g\0o\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0>\0\0\0>\0\0\0=\0\0\0\0\0\0mˆm\0\0\0\0\0\0\0\0­\0\0\0\0\0?\0\0\0?\0\0\0\0\0\0\0@\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0U\0s\0u\0a\0r\0i\0o\0s\0_\0T\0i\0p\0o\0U\0s\0u\0a\0r\0i\0o\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0@\0\0\0@\0\0\0?\0\0\0\0\0\0mˆm\0\0\0\0\0\0\0\0­\0\0\0\0\0A\0\0\0A\0\0\0\0\0\0\08\0\0\0\0\0\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0U\0s\0u\0a\0r\0i\0o\0s\0_\0G\0a\0l\0e\0r\0i\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0B\0\0\0B\0\0\0A\0\0\0\0\0\0\nmH\nm\0\0\0\0\0\0\0\0­\0\0\0\0\0C\0\0\0C\0\0\0\0\0\0\0D\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0_\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0D\0\0\0D\0\0\0C\0\0\0\0\0\0mm\0\0\0\0\0\0\0\0­\0\0\0\0\0E\0\0\0E\0\0\0\0\0\0\0^\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0_\0T\0i\0p\0o\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0F\0\0\0F\0\0\0E\0\0\0\0\0\0\nm\È\nm\0\0\0\0\0\0\0\0­\0\0\0\0\0G\0\0\0G\0\0\0\0\0\0\0X\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0_\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0H\0\0\0H\0\0\0G\0\0\0\0\0\0\nm\nm\0\0\0\0\0\0\0\0­\0\0\0\0\0I\0\0\0I\0\0\0\0\0\0\0V\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0_\0T\0i\0p\0o\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0J\0\0\0J\0\0\0I\0\0\0\0\0\0m\Èm\0\0\0\0\0\0\0\0­\0\0\0\0\0K\0\0\0K\0\0\0\0\0\0\0Z\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0L\0\0\0L\0\0\0K\0\0\0\0\0\0mHm\0\0\0\0\0\0\0\0­\0\0\0\0\0M\0\0\0M\0\0\0\0\0\0\0D\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0E\0v\0e\0n\0t\0o\0s\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0N\0\0\0N\0\0\0M\0\0\0\0\0\0mˆm\0\0\0\0\0\0\0\0­\0\0\0\0\0O\0\0\0O\0\0\0\0\0\0\0B\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0_\0P\0a\0i\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0P\0\0\0P\0\0\0O\0\0\0\0\0\0	m\È	m\0\0\0\0\0\0\0\0­\0\0\0\0\0Q\0\0\0Q\0\0\0\0\0\0\0B\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0G\0a\0l\0e\0r\0i\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0R\0\0\0R\0\0\0Q\0\0\0\0\0\0	mH	m\0\0\0\0\0\0\0\0­\0\0\0\0\0S\0\0\0S\0\0\0\0\0\0\0@\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0T\0\0\0T\0\0\0S\0\0\0\0\0\0mHm\0\0\0\0\0\0\0\0­\0\0\0\0\0U\0\0\0U\0\0\0\0\0\0\08\0\0\0\0\0\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0P\0a\0i\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0V\0\0\0V\0\0\0U\0\0\0\0\0\0	mˆ	m\0\0\0\0\0\0\0\0­\0\0\0\0\0W\0\0\0W\0\0\0\0\0\0\0@\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0X\0\0\0X\0\0\0W\0\0\0\0\0\0m\Èm\0\0\0\0\0\0\0\0­\0\0\0\0\0Y\0\0\0Y\0\0\0\0\0\0\0F\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0s\0_\0D\0e\0t\0a\0l\0l\0e\0D\0e\0p\0o\0r\0t\0e\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0Z\0\0\0Z\0\0\0Y\0\0\0\0\0\0‡˜‡\0\0\0\0\0\0\0\0­\0\0\0\0\0\\\0\0\0\\\0\0\0\0\0\0\0N\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0]\0\0\0]\0\0\0\\\0\0\0\0\0\0û†Xû†\0\0\0\0\0\0\0\0­\0\0\0\0^\0\0\0^\0\0\0\0\0\0\0N\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0_\0\0\0_\0\0\0^\0\0\0\0\0\0\rm\È\rm\0\0\0\0\0\0\0\0­\0\0\0\0`\0\0\0`\0\0\0\0\0\0\0F\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0a\0\0\0a\0\0\0`\0\0\0\0\0\0ÿ†Xÿ†\0\0\0\0\0\0\0\0­\0\0\0\0b\0\0\0b\0\0\0\0\0\0\0V\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0c\0\0\0c\0\0\0b\0\0\0\0\0\0ÿ†\Øÿ†\0\0\0\0\0\0\0\0­\0\0\0\0d\0\0\0d\0\0\0\0\0\0\0>\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0s\0_\0R\0e\0g\0l\0a\0m\0e\0n\0t\0o\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0e\0\0\0e\0\0\0d\0\0\0\0\0\0øl\Èøl\0\0\0\0\0\0\0\0­\0\0\0\0f\0\0\0f\0\0\0\0\0\0\0F\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0g\0\0\0g\0\0\0f\0\0\0\0\0\0‡˜‡\0\0\0\0\0\0\0\0­\0\0\0\0h\0\0\0h\0\0\0\0\0\0\0H\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0_\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0i\0\0\0i\0\0\0h\0\0\0\0\0\0ö\rˆö\r\0\0\0\0\0\0\0\0­\0\0\0\0j\0\0\0j\0\0\0\0\0\0\0@\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0S\0e\0d\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0k\0\0\0k\0\0\0j\0\0\0\0\0\0Ş½Ş½\0\0\0\0\0\0\0\0­\0\0\0\0l\0\0\0l\0\0\0\0\0\0\02\0\0\0\ä½\0\0\0d\0b\0o\0\0\0F\0K\0_\0E\0v\0e\0n\0t\0o\0s\0_\0S\0e\0d\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0m\0\0\0m\0\0\0l\0\0\0\0\0\0\á½\á½\0\0\0\0\0\0\0\0­\0\0\0\0t\0\0\0t\0\0\0\0\0\0\08\0\0\0\â½\0\0\0d\0b\0o\0\0\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0M\0e\0d\0a\0l\0l\0a\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0u\0\0\0u\0\0\0t\0\0\0\0\0\0\å½ˆ\å½\0\0\0\0\0\0\0\0­\0\0\0\0v\0\0\0v\0\0\0\0\0\0\0H\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0_\0R\0a\0n\0k\0i\0n\0g\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0w\0\0\0w\0\0\0v\0\0\0\0\0\0\ã½\ã½\0\0\0\0\0\0\0\0­\0\0\0\0x\0\0\0x\0\0\0\0\0\0\0<\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0T\0i\0p\0o\0S\0e\0d\0e\0s\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0y\0\0\0y\0\0\0x\0\0\0\0\0\0\ä½ˆ\ä½\0\0\0\0\0\0\0\0­\0\0\0\0z\0\0\0z\0\0\0\0\0\0\0:\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0M\0o\0n\0e\0d\0a\0_\0T\0i\0p\0o\0M\0o\0n\0e\0d\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0{\0\0\0{\0\0\0z\0\0\0\0\0\0\á½ˆ\á½\0\0\0\0\0\0\0\0­\0\0\0\0|\0\0\0|\0\0\0\0\0\0\0F\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0}\0\0\0}\0\0\0|\0\0\0\0\0\0\â½\È\â½\0\0\0\0\0\0\0\0­\0\0\0\0~\0\0\0~\0\0\0\0\0\0\0R\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\0\0\0\0\0\0~\0\0\0\0\0\0ß½Hß½\0\0\0\0\0\0\0\0­\0\0\0\0€\0\0\0€\0\0\0\0\0\0\0B\0\0\0\0\'\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0M\0o\0n\0e\0d\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0\0\0\0\0\0\0€\0\0\0\0\0\0\â½\â½\0\0\0\0\0\0\0\0­\0\0\0\0‚\0\0\0‚\0\0\0\0\0\0\0R\0\0\0\Æt\0\0\0d\0b\0o\0\0\0F\0K\0_\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0_\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0ƒ\0\0\0ƒ\0\0\0‚\0\0\0\0\0\0\ç½\ç½\0\0\0\0\0\0\0\0­\0\0\0\0„\0\0\0„\0\0\0\0\0\0\08\0\0\0\0\0\0\0\0\0d\0b\0o\0\0\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0…\0\0\0…\0\0\0„\0\0\0\0\0\0ß½ß½\0\0\0\0\0\0\0\0­\0\0\0\0†\0\0\0†\0\0\0\0\0\0\0>\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0R\0a\0n\0k\0i\0n\0g\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0‡\0\0\0‡\0\0\0†\0\0\0\0\0\0\ã½\È\ã½\0\0\0\0\0\0\0\0­\0\0\0\0ˆ\0\0\0ˆ\0\0\0\0\0\0\0L\0\0\0joV\0\0\0d\0b\0o\0\0\0F\0K\0_\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0_\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0\0\0\0\0\0\0\0\0\Ä\0\0\0\0‰\0\0\0‰\0\0\0ˆ\0\0\0\0\0\0ß½ˆß½\0\0\0\0\0\0\0\0­\0\0\0\0\á\0\0\0`\0\0\0\0\0\0\0\0\0p\0\0\0}\0\0\0\\\0\0\0\0\0\0\Z\0\0\0n\0\0\0m\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0C\0\0\0h\0\0\0\0\0\0\Z\0\0\0{\0\0\0„\0\0\0b\0\0\0\0\0\0\Z\0\0\0,\0\0\0\0\0\0=\0\0\0\0\0\0	\0\0\0ˆ\0\0\0]\0\0\0„\0\0\0\0\0\0\0\0\0“\0\0\0\0\0\0x\0\0\0\0\0\0/\0\0\0i\0\0\0Š\0\0\0f\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0W\0\0\0\0\0\0\0\0\0‡\0\0\0v\0\0\0ˆ\0\0\0\0\0\0\0\0\08\0\0\07\0\0\0†\0\0\0\0\0\0\0\0\0‚\0\0\0…\0\0\0Y\0\0\0\r\0\0\0\0\0\0\0\0\0D\0\0\0\0\0\0\0\0\0\0\0\0h\0\0\0q\0\0\0C\0\0\0\0\0\0\0\0\0-\0\0\0&\0\0\0\0\0\0\0\0\0\0\0\0]\0\0\0%\0\0\0A\0\0\0\0\0\01\0\0\0\0\0\0k\0\0\0Q\0\0\0\0\0\0\Z\0\0\0…\0\0\0\\\0\0\0~\0\0\0\0\0\0\0\0\0:\0\0\0\0\0\0M\0\0\0\0\0\0\0\0\0~\0\0\0a\0\0\0^\0\0\0\0\0\0\Z\0\0\0\0\0\0$\0\0\0t\0\0\0\0\0\0\0\0\0]\0\0\0n\0\0\0€\0\0\0\0\0\0\0\0\0\0\0\0[\0\0\0K\0\0\0\0\0\0\Z\0\0\0\0\0\0\'\0\0\0v\0\0\0\0\0\0\n\0\0\0\0\0\0\"\0\0\0d\0\0\0\0\0\0\0\0\0‚\0\0\0]\0\0\0‚\0\0\0\0\0\0\0\0\0e\0\0\0f\0\0\0G\0\0\0 \0\0\0\0\0\0n\0\0\0ƒ\0\0\0\"\0\0\0!\0\0\0\0\0\0h\0\0\0\0\0\0;\0\0\0$\0\0\0\0\0\0\"\0\0\0+\0\0\0&\0\0\0%\0\0\0\0\0\0\0\0\0\0\0\0\0I\0\0\0(\0\0\0\0\0\0\\\0\0\0u\0\0\0*\0\0\0)\0\0\0\0\0\0\0\0\0\0\0\0z\0\0\0,\0\0\0\0\0\0\0\0\07\0\0\09\0\0\0-\0\0\0\0\0\0\0\0\0\0\0\0E\0\0\0.\0\0\0\0\0\0]\0\0\0š\0\0\07\0\0\0/\0\0\06\0\0\0;\0\0\0.\0\0\0?\0\0\00\0\0\01\0\0\0 \0\0\0=\0\0\0|\0\0\01\0\0\0\0\0\0Z\0\0\0#\0\0\0S\0\0\01\0\0\0\0\0\0\Æ\0\0\0w\0\0\03\0\0\02\0\0\0\0\0\0F\0\0\0/\0\0\0O\0\0\05\0\0\0\n\0\0\0\\\0\0\0\0\0\0U\0\0\05\0\0\0\0\0\0>\0\0\0\0\0\0l\0\0\06\0\0\0\0\0\0\0\0\0\0\0\0j\0\0\06\0\0\0\0\0\0Z\0\0\0¬\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0e\0=\04\00\09\06\0;\0A\0p\0p\0l\0i\0c\0a\0t\0i\0o\0n\0 \0N\0a\0m\0e\0=\0\"\0M\0i\0c\0r\0o\0s\0o\0f\0t\0 \0S\0Q\0L\0 \0S\0e\0r\0v\0e\0r\0 \0M\0a\0n\0a\0g\0e\0m\0e\0n\0t\0 \0S\0t\0u\0d\0i\0o\0\"\0\0\0\0€\0\0\0\0D\0i\0a\0g\0r\0a\0m\0_\0f\0i\0n\0a\0l\0\0\0\0&\0\0\0\0S\0e\0d\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\n\0\0\0P\0a\0i\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\n\0\0\0H\0o\0r\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0U\0s\0u\0a\0r\0i\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0T\0i\0p\0o\0U\0s\0u\0a\0r\0i\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0T\0i\0p\0o\0S\0e\0d\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0$\0\0\0T\0i\0p\0o\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\Z\0\0\0T\0i\0p\0o\0P\0r\0e\0g\0u\0n\0t\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0T\0i\0p\0o\0M\0o\0n\0e\0d\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0T\0i\0p\0o\0M\0e\0d\0a\0l\0l\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0$\0\0\0T\0i\0p\0o\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0T\0i\0p\0o\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0$\0\0\0T\0i\0p\0o\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0S\0t\0o\0c\0k\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0R\0e\0p\0r\0e\0s\0e\0n\0t\0a\0n\0t\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0R\0e\0p\0o\0r\0t\0e\0E\0n\0t\0r\0a\0d\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0R\0e\0g\0l\0a\0m\0e\0n\0t\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0R\0a\0n\0k\0i\0n\0g\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0(\0\0\0P\0r\0e\0g\0u\0n\0t\0a\0s\0F\0r\0e\0c\0u\0e\0n\0t\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0M\0o\0n\0e\0d\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0M\0e\0n\0u\0P\0r\0i\0n\0c\0i\0p\0a\0l\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0M\0e\0d\0a\0l\0l\0a\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0I\0n\0s\0t\0i\0t\0u\0c\0i\0o\0n\0a\0l\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0H\0o\0r\0a\0r\0i\0o\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0G\0a\0l\0e\0r\0i\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0F\0e\0c\0h\0a\0E\0v\0e\0n\0t\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0E\0s\0t\0a\0d\0o\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0D\0e\0t\0a\0l\0l\0e\0E\0v\0e\0n\0t\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0D\0e\0t\0a\0l\0l\0e\0D\0e\0p\0o\0r\0t\0e\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0D\0e\0p\0o\0r\0t\0i\0s\0t\0a\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0D\0e\0p\0o\0r\0t\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\"\0\0\0D\0e\0p\0o\0r\0t\0e\0D\0e\0s\0t\0a\0c\0a\0d\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0 \0\0\0C\0o\0m\0p\0r\0o\0b\0a\0n\0t\0e\0P\0a\0g\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0C\0o\0m\0p\0r\0a\0_\0E\0n\0t\0r\0a\0d\0a\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0$\0\0\0C\0o\0m\0i\0t\0e\0O\0r\0g\0a\0n\0i\0z\0a\0d\0o\0r\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0C\0e\0r\0e\0m\0o\0n\0i\0a\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\"\0\0\0C\0a\0t\0e\0g\0o\0r\0i\0a\0A\0s\0i\0e\0n\0t\0o\0\0\0\0\0\0d\0b\0o\0\0\0\0&\0\0\0\0A\0u\0s\0p\0i\0c\0i\0a\0d\0o\0r\0e\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0$\0\0\0\0A\0s\0i\0e\0n\0t\0o\0s\0\0\0\0\0\0d\0b\0o\0\0\0\0\0\0Ö…	³»kòEš¸7dğ2p\0N\0\0\0{\01\06\03\04\0C\0D\0D\07\0-\00\08\08\08\0-\04\02\0E\03\0-\09\0F\0A\02\0-\0B\06\0D\03\02\05\06\03\0B\09\01\0D\0}\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0bˆR');
+/*!40000 ALTER TABLE `sysdiagrams` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipoauspiciadores`
+--
+
+DROP TABLE IF EXISTS `tipoauspiciadores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipoauspiciadores` (
+  `idTipoAuspiciador` int(11) NOT NULL,
+  `NomAuspiciador` varchar(100) DEFAULT NULL,
+  `imgAuspiciador` longblob,
+  PRIMARY KEY (`idTipoAuspiciador`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipoauspiciadores`
+--
+
+LOCK TABLES `tipoauspiciadores` WRITE;
+/*!40000 ALTER TABLE `tipoauspiciadores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipoauspiciadores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipoceremonias`
+--
+
+DROP TABLE IF EXISTS `tipoceremonias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipoceremonias` (
+  `idTipoCeremonias` int(11) NOT NULL,
+  `NombreC` varchar(50) DEFAULT NULL,
+  `ImagenTipoCeremonia` longblob,
+  `descripcionTipoC` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idTipoCeremonias`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipoceremonias`
+--
+
+LOCK TABLES `tipoceremonias` WRITE;
+/*!40000 ALTER TABLE `tipoceremonias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipoceremonias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipoinstitucional`
+--
+
+DROP TABLE IF EXISTS `tipoinstitucional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipoinstitucional` (
+  `idTipoInstitucional` int(11) NOT NULL,
+  `NombreInstitucional` varchar(50) DEFAULT NULL,
+  `imgInstitucional` longblob,
+  `DescripTipoInstitucional` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTipoInstitucional`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipoinstitucional`
+--
+
+LOCK TABLES `tipoinstitucional` WRITE;
+/*!40000 ALTER TABLE `tipoinstitucional` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipoinstitucional` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipomedalla`
+--
+
+DROP TABLE IF EXISTS `tipomedalla`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipomedalla` (
+  `idTipoMedalla` int(11) NOT NULL,
+  `NombreTipoM` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTipoMedalla`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipomedalla`
+--
+
+LOCK TABLES `tipomedalla` WRITE;
+/*!40000 ALTER TABLE `tipomedalla` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipomedalla` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipomoneda`
+--
+
+DROP TABLE IF EXISTS `tipomoneda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipomoneda` (
+  `idTipoMoneda` int(11) NOT NULL,
+  `DescripcionTipoMoneda` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTipoMoneda`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipomoneda`
+--
+
+LOCK TABLES `tipomoneda` WRITE;
+/*!40000 ALTER TABLE `tipomoneda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipomoneda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tiporepresentante`
+--
+
+DROP TABLE IF EXISTS `tiporepresentante`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tiporepresentante` (
+  `idTipoRepresentante` int(11) NOT NULL,
+  `NombreR` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTipoRepresentante`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tiporepresentante`
+--
+
+LOCK TABLES `tiporepresentante` WRITE;
+/*!40000 ALTER TABLE `tiporepresentante` DISABLE KEYS */;
+INSERT INTO `tiporepresentante` VALUES (1,'CARLOS NEUHAUS'),(2,'EDUARDO GONZALES CHAVEZ'),(3,'ALEJANDRO GILBERT MORENO BOCANEGRA'),(4,'FERNANDO PERERA DIAZ'),(5,'DANTE JOSÃ‰ MANDRIATTI CASTRO'),(6,'PEDRO DEL ROSARIO DELGADO'),(7,'JORGE BARRERA ZEGARRA'),(8,'VICTOR ASPILLAGA ALAYZA'),(9,'KARLA AYALA DE LA CASAS'),(10,'JOSÃ‰ MANUEL GIRAU MENDOZA'),(11,'SUSANA VICTORIA CÃ“RDOVA AVILA'),(12,'THOMAS BACH'),(13,'LUISA VILLAR GÃLVEZ');
+/*!40000 ALTER TABLE `tiporepresentante` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipousuario`
+--
+
+DROP TABLE IF EXISTS `tipousuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipousuario` (
+  `idTipoUsuario` int(11) NOT NULL,
+  `nombreTipoU` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTipoUsuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipousuario`
+--
+
+LOCK TABLES `tipousuario` WRITE;
+/*!40000 ALTER TABLE `tipousuario` DISABLE KEYS */;
+INSERT INTO `tipousuario` VALUES (1,'Usuario'),(2,'Administrador'),(3,'Sponsor');
+/*!40000 ALTER TABLE `tipousuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `trabajaconnosotros`
+--
+
+DROP TABLE IF EXISTS `trabajaconnosotros`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `trabajaconnosotros` (
+  `idtrabajaConNosotros` int(11) NOT NULL AUTO_INCREMENT,
+  `tra_desc` text NOT NULL,
+  `tra_imagen` varchar(50) NOT NULL,
+  `tra_fecha` date NOT NULL,
+  `bEstPri` bit(1) NOT NULL,
+  PRIMARY KEY (`idtrabajaConNosotros`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trabajaconnosotros`
+--
+
+LOCK TABLES `trabajaconnosotros` WRITE;
+/*!40000 ALTER TABLE `trabajaconnosotros` DISABLE KEYS */;
+INSERT INTO `trabajaconnosotros` VALUES (1,'TRABAJA CON NOSOTROS: Las personas que cumplan con los requisitos especificados en las bases de la Convocatoria, deberÃ¡n enviar la documentaciÃ³n de acuerdo a las indicaciones brindadas en el cronograma de los Procesos de SelecciÃ³n, publicados por la Oficina de Personal de los Juegos.','vista/mgc/img/trabaja.jpg','2019-05-17','');
+/*!40000 ALTER TABLE `trabajaconnosotros` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `unidadorganizacional`
+--
+
+DROP TABLE IF EXISTS `unidadorganizacional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unidadorganizacional` (
+  `idUnidadOrganizacional` int(11) NOT NULL AUTO_INCREMENT,
+  `U_nombre` varchar(100) NOT NULL,
+  `idSecUniOrgFK` int(11) NOT NULL,
+  PRIMARY KEY (`idUnidadOrganizacional`),
+  KEY `idSecUniOrgFK` (`idSecUniOrgFK`),
+  CONSTRAINT `unidadorganizacional_ibfk_1` FOREIGN KEY (`idSecUniOrgFK`) REFERENCES `oficinasorganigrama` (`idSecretaria`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `unidadorganizacional`
+--
+
+LOCK TABLES `unidadorganizacional` WRITE;
+/*!40000 ALTER TABLE `unidadorganizacional` DISABLE KEYS */;
+INSERT INTO `unidadorganizacional` VALUES (1,'Unidad de Enlace y CoordinaciÃ³n del Soporte Internacional',1),(2,'Unidad LogÃ­stica',2),(3,'Unidad TesorerÃ­a',2),(4,'Unidad de Presupuesto',7),(5,'Unidad de Planeamiento y modernizaciÃ³n',7),(6,'SubdirecciÃ³n de ImplementaciÃ³n Temporal para la Entrega de Sedes',11),(7,'SubdirecciÃ³n de IntegraciÃ³n operativa',11),(8,'SubdirecciÃ³n de obras',12),(9,'SubdirecciÃ³n de RecepciÃ³n, LiquidaciÃ³n y Transferencias de Obras',12),(10,'SubdirecciÃ³n de Deportes',13),(11,'SubdirecciÃ³n de GestiÃ³n de Sedes',13),(12,'SubdirecciÃ³n de Relaciones Internacionales y Protocolo Deportivo',13),(13,'SubdirecciÃ³n de GestiÃ³n de Villas',13),(14,'SubdirecciÃ³n de Transporte y Seguridad',13),(15,'SubdirecciÃ³n de Servicios a los Juegos y Servicios MÃ©dicos',13),(16,'SubdirecciÃ³n de Desarrollo TecnolÃ³gico',14),(17,'SubdirecciÃ³n de Transmisiones',14),(18,'SubdirecciÃ³n de Comunicaciones, Prensa y Ceremonias',15),(19,'SubdirecciÃ³n de ComercializaciÃ³n y Mercadotecnia',15);
+/*!40000 ALTER TABLE `unidadorganizacional` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `idUsuario` int(11) NOT NULL,
+  `NombreU` varchar(50) DEFAULT NULL,
+  `ApellidoU` varchar(50) DEFAULT NULL,
+  `emailU` varchar(50) DEFAULT NULL,
+  `telefonoU` varchar(20) DEFAULT NULL,
+  `passwordU` varchar(40) DEFAULT NULL,
+  `DocIdentidad` varchar(20) DEFAULT NULL,
+  `idTipoUsuario` int(11) DEFAULT NULL,
+  `idGaleria` int(11) DEFAULT NULL,
+  `idEstadoUsuario` int(11) NOT NULL,
+  PRIMARY KEY (`idUsuario`),
+  KEY `FK_Usuarios_Galeria` (`idGaleria`),
+  KEY `FK_Usuarios_TipoUsuario` (`idTipoUsuario`),
+  CONSTRAINT `FK_Usuarios_Galeria` FOREIGN KEY (`idGaleria`) REFERENCES `galeria` (`idGaleria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Usuarios_TipoUsuario` FOREIGN KEY (`idTipoUsuario`) REFERENCES `tipousuario` (`idTipoUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Cesar','Arriola Chuco','46988257@continental.edu.pe','938219839','123456','46988257',2,NULL,0);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vision`
+--
+
+DROP TABLE IF EXISTS `vision`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vision` (
+  `idVision` int(11) NOT NULL AUTO_INCREMENT,
+  `vi_desc` text NOT NULL,
+  `vi_imagen` varchar(50) NOT NULL,
+  `vi_fecha` date NOT NULL,
+  `bEstPri` bit(1) NOT NULL,
+  PRIMARY KEY (`idVision`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vision`
+--
+
+LOCK TABLES `vision` WRITE;
+/*!40000 ALTER TABLE `vision` DISABLE KEYS */;
+INSERT INTO `vision` VALUES (1,'VISIÃ“N: Excelente organizaciÃ³n de los XVIII Juegos Panamericanos y Juegos Parapanamericanos del 2019, contribuyendo con el desarrollo del deporte nacional y el posicionamiento internacional de la ciudad de Lima.','vista/mgc/img/vision.jpg','2019-05-17','');
+/*!40000 ALTER TABLE `vision` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-06-10 20:42:45
