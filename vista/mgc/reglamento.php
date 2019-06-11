@@ -8,7 +8,7 @@ include 'conexion.php';
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div><h1>REGLAMENTO JUEGOS PANAMERICANOS</h1></div>
+        <div><h1>REGLAMENTO JUEGOS PANAMERICANOS 2019</h1></div>
         <?php
         $sql = "CALL mgc_mostrar_Reglamento_SP()";
         ?>
