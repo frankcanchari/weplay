@@ -9,6 +9,9 @@ $(document).ready(function () {
     $('#enlaceMedallero').on("click", function () {
         $('#contenido').load('vista/mgc/medallero.php');
     });
+        $('#enlaceReglamento').on("click", function () {
+        $('#contenido').load('vista/mgc/reglamento.php');
+    });
 });
 
 

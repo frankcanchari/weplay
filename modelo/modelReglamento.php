@@ -5,9 +5,21 @@ require '../core/crud.php';
 
 class ModelReglamento {
 
-    function listarReglamento() {
+    function listarSeccion() {
         $cCrud = new Crud();
-        $fila = $cCrud->buscarQueryAll("CALL mgc_mostrar_Reglamento_SP()");
+        $fila = $cCrud->buscarQueryAll("CALL mgc_listarSeccion_SP()");
+        return $fila;
+    }
+
+    function listarNorma($idSeccion) {
+        $cCrud = new Crud();
+        $fila = $cCrud->buscarQueryAll("CALL mgc_listarNorma_SP(".$idSeccion.")");
+        return $fila;
+    }
+
+    function listarSubNorma($idNorma) {
+        $cCrud = new Crud();
+        $fila = $cCrud->buscarQueryAll("CALL mgc_listarSubnorma_SP(".$idNorma.")");
         return $fila;
     }
 
