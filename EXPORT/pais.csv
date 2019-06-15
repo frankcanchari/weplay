@@ -1,0 +1,43 @@
+idPais;NombrePais;BanderaPais
+1;"Estados Unidos";C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\estadosUnidos.jpg
+2;Cuba;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\cuba.jpg
+3;Canadá;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\canada.jpg
+4;Brasil;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\brasil.jpg
+5;Argentina;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\argentina.jpg
+6;Mexico;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\mexico.jpg
+7;Colombia;" C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\colombia.jpg"
+8;Venezuela;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\venezuela.jpg
+9;Chile;C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\chile.jpg
+10;"República Dominicana";C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\republicaDominicana.jpg
+11;"Puerto Rico";C:\xampp\htdocs\WEPLAY\vista\mgc\img\banderas\puertoRico.jpg
+12;Ecuador;NULL
+13;Jamaica;NULL
+14;Guatemala;NULL
+15;Uruguay;NULL
+16;"Trinidad y Tobago";NULL
+17;Bahamas;NULL
+18;Perú;NULL
+19;"Antillas Neerlandesas";NULL
+20;"Costa Rica";NULL
+21;Panamá;NULL
+22;Surinam;NULL
+23;Guyana;NULL
+24;"El Salvador";NULL
+25;Bermudas;NULL
+26;"Islas Caimán";NULL
+27;"Antigua y Barbuda";NULL
+28;"Santa Lucía";NULL
+29;Nicaragua;NULL
+30;"Islas Virgenes de los Estados Unidos";NULL
+31;Barbados;NULL
+32;Haití;NULL
+33;Dominica;NULL
+34;"San Cristóbal Y Nieves";NULL
+35;Paraguay;NULL
+36;Bolivia;NULL
+37;Honduras;NULL
+38;Granada;NULL
+39;Belice;NULL
+40;"San Vicente y las Granadinas";NULL
+41;Aruba;NULL
+42;"Islas Virgenes Británicas";NULL

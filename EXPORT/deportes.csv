@@ -1,0 +1,11 @@
+idDeporte;NombDeporte;idDetalleDeporte;idReglamento
+1;Futbol;NULL;NULL
+2;Atletismo;NULL;NULL
+3;Bádminton;NULL;NULL
+4;Baloncesto;NULL;NULL
+5;Boxeo;NULL;NULL
+6;"Ciclismo de Pista";NULL;NULL
+7;"Ciclismo de Ruta";NULL;NULL
+8;"Gimnasia Ritmica";NULL;NULL
+9;Golf;NULL;NULL
+10;Judo;NULL;NULL
