@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/WEPLAY/core/crud.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/controlador/reglamentoController.php</file>
             <file>file:/C:/xampp/htdocs/WEPLAY/controlador/medalleroHistoricoController.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/core/conexion.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/index.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/modelo/modelOrganigrama.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/vista/mgc/medallero.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/controlador/organigramaController.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/vista/mgc/organigrama.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/vista/mgc/reglamento.php</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/vista/app/html/cabecera.html</file>
-            <file>file:/C:/xampp/htdocs/WEPLAY/vista/mgc/institucional.php</file>
+            <file>file:/C:/xampp/htdocs/WEPLAY/vista/app/css/app.css</file>
+            <file>file:/C:/xampp/htdocs/WEPLAY/modelo/modelMedalleroHistorico.php</file>
         </group>
     </open-files>
 </project-private>

@@ -21,16 +21,16 @@ function mostrarInformacionReglamento() {
 
     foreach ($resultados as $filaResultados) {
         $codigoSeccion = $filaResultados['codigo'];
-        $string .= '<div class="col-md-12" style="border: 1px solid black">' . utf8_encode($filaResultados['seccion']) . '</div>';
+        $string .= '<div class="col-md-12"><h3>' . utf8_encode($filaResultados['seccion']) . '</h3></div>';
         $normaresultado = $cReglamento->listarNorma($codigoSeccion);
         $string .= '<div class="col-md-12">';
         foreach ($normaresultado as $filaNormaRes) {
             $codigoNorma = $filaNormaRes['codigo'];
-            $string .= '<div class="col-md-12" style="border: 1px solid black">' . utf8_encode($filaNormaRes['contenido']) . '</div>';
+            $string .= '<div class="col-md-12" >' . utf8_encode($filaNormaRes['contenido']) . '</div>';
             $subNorma = $cReglamento->listarSubNorma($codigoNorma);
             $string .= '<div class="col-md-12">';
             foreach ($subNorma as $filaSubNormaRes) {
-                $string .= '<div class="col-md-12" style="border: 1px solid black">' . utf8_encode($filaSubNormaRes['contenido']) . '</div>';
+                $string .= '<div class="col-md-12">' . utf8_encode($filaSubNormaRes['contenido']) . '</div>';
             }
             $string .= '</div>';
         }
